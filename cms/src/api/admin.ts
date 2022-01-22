@@ -17,6 +17,11 @@ export const fetchAdminList = async (query: { name: string, page: number, count:
     return res.data
 }
 
+export const createAdminUser = async (body: AdminUserInfo & { password: string }) => {
+    const res = await instance.post<BaseResponse<{}>>('api_admin_user', body)
+    return res.data
+}
+
 export const deleteAdminUser = async (body: { _id: string }) => {
     const res = await instance.post<BaseResponse<{}>>('api_admin_delete_user', body)
     return res.data

@@ -1,6 +1,7 @@
 import { Button, Form, Input, message, Modal, Select } from 'antd'
+import md5 from 'md5'
 import { useEffect, useState } from 'react'
-import { editAdminUser } from '../../api/admin'
+import { createAdminUser, editAdminUser } from '../../api/admin'
 import { useSelector } from '../../store'
 import { AdminUserInfo, Role } from '../Dashboard'
 
@@ -13,7 +14,6 @@ const { Option } = Select
 export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const adminUserId = useSelector((state) => state.adminUserInfo._id)
   useEffect(() => {
     if (show) {
       form.setFieldsValue(adminInfo)
@@ -22,18 +22,35 @@ export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
   const onOk = () => {
     setConfirmLoading(true)
     const formData = form.getFieldsValue()
-    editAdminUser({ _id: adminInfo!._id, ...formData })
-      .then((res) => {
-        if (res.code === 0) {
-          message.success('修改成功')
-        } else {
-          message.error(`修改失败 ${res.msg}`)
-        }
-      })
-      .finally(() => {
-        setConfirmLoading(false)
-        onClose(true)
-      })
+    if (adminInfo!._id) {
+      // 编辑
+      editAdminUser({ _id: adminInfo!._id, ...formData })
+        .then((res) => {
+          if (res.code === 0) {
+            message.success('修改成功')
+          } else {
+            message.error(`修改失败 ${res.msg}`)
+          }
+        })
+        .finally(() => {
+          setConfirmLoading(false)
+          onClose(true)
+        })
+    } else {
+      // 新建
+      createAdminUser({ ...formData, password: md5('000000') })
+        .then((res) => {
+          if (res.code === 0) {
+            message.success('创建成功')
+          } else {
+            message.error(`创建失败 ${res.msg}`)
+          }
+        })
+        .finally(() => {
+          setConfirmLoading(false)
+          onClose(true)
+        })
+    }
   }
   const onCancel = () => {
     onClose()

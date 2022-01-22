@@ -20,6 +20,14 @@ const Admin: React.FC = () => {
     useState<AdminUserInfo | null>(null)
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false)
   const adminUserId = useSelector((state) => state.adminUserInfo._id)
+  const onCreateAdminUserUserClick = () => {
+    setCurrentAdminUser({
+      name: '',
+      email: '',
+      role: Role.Admin,
+    })
+    setEditModalShow(true)
+  }
   const onEditButtonClick = (adminUser: AdminUserInfo) => {
     setCurrentAdminUser(adminUser)
     setEditModalShow(true)
@@ -152,6 +160,13 @@ const Admin: React.FC = () => {
         }}
         style={{ width: 400, marginBottom: 20 }}
       />
+      <Button
+        type="primary"
+        style={{ marginLeft: 20 }}
+        onClick={onCreateAdminUserUserClick}
+      >
+        新建管理员
+      </Button>
       <Table
         pagination={{
           onChange: (page) => {
@@ -160,7 +175,7 @@ const Admin: React.FC = () => {
           pageSize: 20,
           total: total,
         }}
-        rowKey={(record) => record._id}
+        rowKey={(record) => record._id!}
         loading={loading}
         columns={columns}
         dataSource={tableData}
