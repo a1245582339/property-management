@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { getToken } from '../utils/cookie';
 const instance = axios.create({
     headers: {
         'Content-Type': 'application/json',
@@ -9,11 +8,11 @@ const whiteList = ['/login']
 // request拦截器
 instance.interceptors.request.use(
     config => {
-        if (getToken() && getToken() !== 'undefined') {
-            config.headers!.Authorization = `Bearer ${getToken()}`
-        } else if (whiteList.indexOf(window.location.pathname) === -1) {
-            window.location.pathname = 'login'
-        }
+        // if (getToken() && getToken() !== 'undefined') {
+        //     config.headers!.Authorization = `Bearer ${getToken()}`
+        // } else if (whiteList.indexOf(window.location.pathname) === -1) {
+        //     window.location.pathname = 'login'
+        // }
         return config
     },
     error => error,
