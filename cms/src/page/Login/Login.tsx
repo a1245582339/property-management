@@ -6,6 +6,7 @@ import { loginApi } from '../../api/admin'
 import md5 from 'md5'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
+import { authRouter } from '../../router'
 
 export type LoginForm = {
   email: string
@@ -18,14 +19,16 @@ export type AuthResponse = {
 }
 
 export const Login: React.FC = () => {
+  const navigate = useNavigate()
   const onFinish = async (value: LoginForm) => {
     const authResult = await loginApi({
       email: value.email,
       password: md5(value.password),
     })
-    const navigate = useNavigate()
-    Cookies.set('user_id', authResult.user_id)
-    navigate('/dashboard')
+    if (authResult.code === 0) {
+      Cookies.set('user_id', authResult.data.user_id)
+      navigate('/dashboard')
+    }
   }
   return (
     <div className="login">

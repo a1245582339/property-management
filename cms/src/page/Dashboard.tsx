@@ -10,8 +10,8 @@ const { Content } = Layout
 
 export enum Role {
   NoLogin,
-  Admin,
   SuperAdmin,
+  Admin,
 }
 
 export type AdminUserInfo = {
@@ -28,7 +28,9 @@ export const Dashboard: React.FC<Props> = ({ router }) => {
   const disaptch = useDispatch()
   useEffect(() => {
     fetchAdminUserInfoApi().then((res) => {
-      disaptch({ type: 'SET_ADMIN', payload: res })
+      if (res.code === 0) {
+        disaptch({ type: 'SET_ADMIN', payload: res.data })
+      }
     })
   }, [])
 

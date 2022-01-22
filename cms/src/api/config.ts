@@ -4,6 +4,12 @@ const instance = axios.create({
         'Content-Type': 'application/json',
     },
 })
+
+export type BaseResponse<T> = {
+    code: number
+    data: T
+    msg: string
+}
 const whiteList = ['/login']
 // request拦截器
 instance.interceptors.request.use(
@@ -20,7 +26,7 @@ instance.interceptors.request.use(
 
 // response拦截器
 instance.interceptors.response.use(
-    response => response.data,
+    response => response,
     (error) => {
         if (error.response.status === 401) {
             // window.location.pathname = 'login'
