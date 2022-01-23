@@ -7,6 +7,7 @@ import {
   SolutionOutlined,
   AuditOutlined,
   IdcardOutlined,
+  SmileOutlined,
 } from '@ant-design/icons'
 import React from 'react'
 
@@ -27,7 +28,7 @@ export const commonRouter = [
     title: '用户管理',
     path: 'user',
     icon: <UserOutlined />,
-    component: React.lazy(() => import('./page/Order/Order')),
+    component: React.lazy(() => import('./page/User/User')),
   },
   {
     title: '住房管理',
@@ -58,6 +59,12 @@ export const commonRouter = [
     path: 'message-board',
     icon: <SolutionOutlined />,
     component: React.lazy(() => import('./page/MessageBoard/MessageBoard')),
+  },
+  {
+    title: '个人信息',
+    path: 'me',
+    icon: <SmileOutlined />,
+    component: React.lazy(() => import('./page/Me/Me')),
   },
 ]
 

@@ -26,7 +26,9 @@ export const Login: React.FC = () => {
       password: md5(value.password),
     })
     if (authResult.code === 0) {
-      Cookies.set('user_id', authResult.data.user_id)
+      Cookies.set('user_id', authResult.data.user_id, {
+        expires: 7,
+      })
       navigate('/dashboard')
     }
   }

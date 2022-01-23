@@ -1,4 +1,8 @@
 const Notice: React.FC = () => {
-  return <></>
+  return (
+    <>
+      <h1>Notice</h1>
+    </>
+  )
 }
 export default Notice

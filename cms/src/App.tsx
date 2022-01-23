@@ -21,6 +21,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="dashboard" />} />
         <Route path="/dashboard" element={<Dashboard router={router} />}>
+          <Route
+            path="/dashboard"
+            element={<Navigate to="/dashboard/home" />}
+          />
           {router.map((item) => (
             <Route
               key={item.path}

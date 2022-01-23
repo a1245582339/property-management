@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Modal, Select } from 'antd'
 import md5 from 'md5'
 import { useEffect, useState } from 'react'
-import { createAdminUser, editAdminUser } from '../../api/admin'
+import { createAdminUserApi, editAdminUserApi } from '../../api/admin'
 import { useSelector } from '../../store'
 import { AdminUserInfo, Role } from '../Dashboard'
 
@@ -24,7 +24,7 @@ export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
     const formData = form.getFieldsValue()
     if (adminInfo!._id) {
       // 编辑
-      editAdminUser({ _id: adminInfo!._id, ...formData })
+      editAdminUserApi({ _id: adminInfo!._id, ...formData })
         .then((res) => {
           if (res.code === 0) {
             message.success('修改成功')
@@ -38,7 +38,7 @@ export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
         })
     } else {
       // 新建
-      createAdminUser({ ...formData, password: md5('000000') })
+      createAdminUserApi({ ...formData, password: md5('000000') })
         .then((res) => {
           if (res.code === 0) {
             message.success('创建成功')
@@ -86,7 +86,7 @@ export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
                 { message: '不是正确的邮箱格式', type: 'email' },
               ]}
             >
-              <Input />
+              <Input disabled={!!adminInfo._id} />
             </Form.Item>
             <Form.Item label="设为管理员" name="role">
               <Select

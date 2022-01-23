@@ -1,10 +1,13 @@
 import { Space, Table, Input, Button, Popover, message } from 'antd'
 import md5 from 'md5'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { editAdminUser, fetchAdminList } from '../../api/admin'
+import {
+  deleteAdminUserApi,
+  editAdminUserApi,
+  fetchAdminListApi,
+} from '../../api/admin'
 import { useSelector } from '../../store'
 import { AdminUserInfo, Role } from '../Dashboard'
-import { DelModal } from './DelModal'
 import { EditModal } from './EditModal'
 
 const { Search } = Input
@@ -14,11 +17,11 @@ const Admin: React.FC = () => {
   const [name, setName] = useState('')
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [delModalShow, setDelModalShow] = useState(false)
   const [editModalShow, setEditModalShow] = useState(false)
   const [currentAdminUser, setCurrentAdminUser] =
     useState<AdminUserInfo | null>(null)
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
   const adminUserId = useSelector((state) => state.adminUserInfo._id)
   const onCreateAdminUserUserClick = () => {
     setCurrentAdminUser({
@@ -39,25 +42,28 @@ const Admin: React.FC = () => {
       getAdminList()
     }
   }
-  const onDelButtonClick = (adminUser: AdminUserInfo) => {
-    setCurrentAdminUser(adminUser)
-    setDelModalShow(true)
-  }
-  const onDelModalClose = (refresh = false) => {
-    setCurrentAdminUser(null)
-    setDelModalShow(false)
-    if (refresh) {
-      getAdminList()
-    }
-  }
   const onResetPasswordButtonClick = (adminUser: AdminUserInfo) => {
     setResetPasswordLoading(true)
-    editAdminUser({ ...adminUser, password: md5('000000') }).then((res) => {
+    editAdminUserApi({ ...adminUser, password: md5('000000') }).then((res) => {
       if (res.code === 0) {
         message.success('重置成功')
         setResetPasswordLoading(false)
       }
     })
+  }
+  const onDeleteButtonClick = (adminUser: AdminUserInfo) => {
+    setDeleteLoading(true)
+    deleteAdminUserApi({ _id: adminUser._id! })
+      .then((res) => {
+        if (res.code === 0) {
+          message.success('删除成功')
+        } else {
+          message.error(`删除失败 ${res.msg}`)
+        }
+      })
+      .finally(() => {
+        getAdminList()
+      })
   }
   const columns = useMemo(
     () => [
@@ -121,27 +127,44 @@ const Admin: React.FC = () => {
                 重置密码
               </Button>
             </Popover>
-
-            <Button
-              size="small"
-              danger
-              type="primary"
-              disabled={record._id === adminUserId}
-              onClick={() => {
-                onDelButtonClick(record)
-              }}
+            <Popover
+              content={
+                <div>
+                  <Button
+                    size="small"
+                    danger
+                    type="primary"
+                    loading={deleteLoading}
+                    disabled={record._id === adminUserId}
+                    onClick={() => {
+                      onDeleteButtonClick(record)
+                    }}
+                  >
+                    确定
+                  </Button>
+                </div>
+              }
+              title={`确定删除管理员 ${record.name} ？`}
+              trigger="click"
             >
-              删除
-            </Button>
+              <Button
+                size="small"
+                danger
+                type="primary"
+                disabled={record._id === adminUserId}
+              >
+                删除
+              </Button>
+            </Popover>
           </Space>
         ),
       },
     ],
-    [resetPasswordLoading]
+    [resetPasswordLoading, deleteLoading]
   )
   const getAdminList = useCallback(async () => {
     setLoading(true)
-    const res = await fetchAdminList({ name, page, count: 20 })
+    const res = await fetchAdminListApi({ name, page, count: 20 })
     if (res.code === 0) {
       setTableData(res.data.list)
       setTotal(res.data.total)
@@ -180,11 +203,6 @@ const Admin: React.FC = () => {
         columns={columns}
         dataSource={tableData}
       ></Table>
-      <DelModal
-        show={delModalShow}
-        adminInfo={currentAdminUser}
-        onClose={onDelModalClose}
-      />
       <EditModal
         show={editModalShow}
         adminInfo={currentAdminUser}

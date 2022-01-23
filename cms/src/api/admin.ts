@@ -12,22 +12,27 @@ export const fetchAdminUserInfoApi = async () => {
     return res.data
 }
 
-export const fetchAdminList = async (query: { name: string, page: number, count: number }) => {
+export const fetchAdminListApi = async (query: { name: string, page: number, count: number }) => {
     const res = await instance.get<BaseResponse<{ list: AdminUserInfo[], total: number }>>('api_admin_user', { params: query })
     return res.data
 }
 
-export const createAdminUser = async (body: AdminUserInfo & { password: string }) => {
+export const createAdminUserApi = async (body: AdminUserInfo & { password: string }) => {
     const res = await instance.post<BaseResponse<{}>>('api_admin_user', body)
     return res.data
 }
 
-export const deleteAdminUser = async (body: { _id: string }) => {
+export const deleteAdminUserApi = async (body: { _id: string }) => {
     const res = await instance.post<BaseResponse<{}>>('api_admin_delete_user', body)
     return res.data
 }
 
-export const editAdminUser = async (body: Partial<AdminUserInfo & { password: string }>) => {
+export const editAdminUserApi = async (body: Partial<AdminUserInfo & { password: string }>) => {
     const res = await instance.post<BaseResponse<{}>>('api_admin_edit_user', body)
+    return res.data
+}
+
+export const changePassword = async (body: { newPassword: string, oldPassword: string }) => {
+    const res = await instance.post<BaseResponse<{}>>('api_admin_change_password', body)
     return res.data
 }
