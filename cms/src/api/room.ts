@@ -31,3 +31,22 @@ export async function fetchRoomUserApi(query: any) {
   const res = await instance.get('api_user_room', { params: query })
   return res.data
 }
+
+export const deleteRoomUserApi = async (body: {
+  phoneNumber: string
+  roomId: string
+}) => {
+  const res = await instance.post<BaseResponse<User[]>>(
+    'api_delete_user_room',
+    body
+  )
+  return res.data
+}
+
+export const addRoomUserApi = async (body: {
+  phoneNumber: string
+  roomId: string
+}) => {
+  const res = await instance.post<BaseResponse<{}>>('api_user_room', body)
+  return res.data
+}

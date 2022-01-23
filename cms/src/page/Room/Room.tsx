@@ -1,7 +1,7 @@
 import { HomeOutlined } from '@ant-design/icons'
-import { Card, Layout, Menu, message, Tree } from 'antd'
+import { Card, Input, Layout, Menu, message, Modal, Tree } from 'antd'
 import { EventDataNode } from 'antd/lib/tree'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fetchBuildingApi, fetchRoomApi, fetchUnitApi } from '../../api/room'
 import { UserRoomTable } from './UserRoomTable'
 const { Sider, Content } = Layout
@@ -32,6 +32,10 @@ const Room: React.FC = () => {
   const [currentRoomId, setCurrentRoomId] = useState('')
   const [rightMenuPosition, setRightMenuPosition] = useState([0, 0])
   const [rightMenuShow, setRightMenuShow] = useState(false)
+  const [currentRightClickNode, setCurrentRightClickNode] = useState<
+    (EventDataNode & DataNode) | null
+  >(null)
+  const [createNodeModalShow, setCreateNodeModalShow] = useState(false)
   const treeBarRef = useRef<HTMLDivElement>(null)
   const getBuildings = useCallback(() => {
     fetchBuildingApi().then((res) => {
@@ -132,14 +136,42 @@ const Room: React.FC = () => {
     node: EventDataNode
   }) => {
     info.event.stopPropagation()
-    const treeBarPosition = treeBarRef.current?.getBoundingClientRect()
-    const { pageX, pageY } = info.event
-    setRightMenuPosition([
-      pageX - treeBarPosition!.x,
-      pageY - treeBarPosition!.y,
-    ])
-    setRightMenuShow(true)
+    const node = info.node as EventDataNode & DataNode
+    if (
+      node.type === 'root' ||
+      node.type === 'building' ||
+      node.type === 'unit'
+    ) {
+      const treeBarPosition = treeBarRef.current?.getBoundingClientRect()
+      const { pageX, pageY } = info.event
+      setRightMenuPosition([
+        pageX - treeBarPosition!.x,
+        pageY - treeBarPosition!.y,
+      ])
+      setRightMenuShow(true)
+      setCurrentRightClickNode(node)
+    }
   }
+  const nodeToStr = useMemo(() => {
+    if (!currentRightClickNode) return ''
+    if (currentRightClickNode.type === 'root') {
+      return '楼'
+    } else if (currentRightClickNode.type === 'building') {
+      return '单元'
+    } else if (currentRightClickNode.type === 'unit') {
+      return '房间'
+    } else {
+      return ''
+    }
+  }, [currentRightClickNode])
+  const onClickCreateChild = () => {
+    setCreateNodeModalShow(true)
+  }
+  const onCancelCreateNode = () => {
+    setCreateNodeModalShow(false)
+    setCurrentRightClickNode(null)
+  }
+  const onConfirmCreateNode = () => {}
   return (
     <>
       <Layout style={{ padding: 30, height: 800 }}>
@@ -150,6 +182,7 @@ const Room: React.FC = () => {
             overflowY: 'auto',
             position: 'relative',
             overflowX: 'hidden',
+            padding: 20,
           }}
           onClick={onSiderBarClick}
           ref={treeBarRef}
@@ -159,7 +192,7 @@ const Room: React.FC = () => {
             <Card
               hoverable
               style={{
-                width: 100,
+                width: 300,
                 position: 'absolute',
                 left: rightMenuPosition[0],
                 top: rightMenuPosition[1],
@@ -168,7 +201,9 @@ const Room: React.FC = () => {
               bodyStyle={{ padding: 0 }}
             >
               <Menu>
-                <Menu.Item key="1">创建</Menu.Item>
+                <Menu.Item key="1" onClick={onClickCreateChild}>
+                  创建子条目
+                </Menu.Item>
                 <Menu.Item key="2">删除</Menu.Item>
               </Menu>
             </Card>
@@ -183,9 +218,17 @@ const Room: React.FC = () => {
             treeData={treeData}
             onSelect={onNodeSelect}
           />
+          <Modal
+            visible={createNodeModalShow}
+            title={`创建${nodeToStr}`}
+            onCancel={onCancelCreateNode}
+            onOk={onConfirmCreateNode}
+          >
+            <Input placeholder={`请输入${nodeToStr}编号`} />
+          </Modal>
         </Sider>
         <Layout>
-          <Content>
+          <Content style={{ backgroundColor: '#fff', padding: 20 }}>
             <UserRoomTable roomId={currentRoomId} />
           </Content>
         </Layout>
