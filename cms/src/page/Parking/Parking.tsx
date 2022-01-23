@@ -1,7 +1,12 @@
 import { Button, Input, message, Popover, Table } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 import { ColumnsType } from 'antd/lib/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { deleteParkingApi, fetchParkingApi } from '../../api/parking'
+import {
+  createParkingApi,
+  deleteParkingApi,
+  fetchParkingApi,
+} from '../../api/parking'
 import User from '../User/User'
 
 export type Parking = {
@@ -18,6 +23,8 @@ const Parking: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [tableData, setTableData] = useState<Parking[]>([])
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [addModalShow, setAddModalShow] = useState(false)
+  const [newParkingCode, setNewParkingCode] = useState('')
   const onDeleteButtonClick = async (parking: Parking) => {
     setDeleteLoading(true)
     const res = await deleteParkingApi({ _id: parking._id })
@@ -93,18 +100,49 @@ const Parking: React.FC = () => {
     ],
     []
   )
+  const onCloseAddModal = () => {
+    setAddModalShow(false)
+    setNewParkingCode('')
+  }
+  const onAddButtonClick = async () => {
+    const res = await createParkingApi({ parkingCode: newParkingCode })
+    if (res.code === 0) {
+      message.success('创建成功')
+      onCloseAddModal()
+      getParking()
+    }
+  }
   return (
     <>
       <Search
         placeholder="请输入手机号搜索"
+        style={{ width: 300, marginBottom: 20 }}
         onSearch={(value) => setPhoneNumber(value)}
       />
+      <Button type="primary" onClick={onAddButtonClick}>
+        添加车位
+      </Button>
       <Table
         pagination={{ total, onChange: setPage }}
         loading={loading}
         columns={colunms}
         dataSource={tableData}
       />
+      <Modal
+        visible={addModalShow}
+        title="添加车位"
+        onCancel={onCloseAddModal}
+        onOk={onAddButtonClick}
+      >
+        <Input
+          width={300}
+          value={newParkingCode}
+          onChange={(e) => {
+            setNewParkingCode(e.target.value)
+          }}
+          placeholder="请输入车位编号"
+        />
+      </Modal>
     </>
   )
 }
