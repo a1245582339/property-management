@@ -33,7 +33,7 @@ export async function fetchRoomUserApi(query: any) {
 }
 
 export const deleteRoomUserApi = async (body: {
-  phoneNumber: string
+  userId: string
   roomId: string
 }) => {
   const res = await instance.post<BaseResponse<User[]>>(
@@ -44,7 +44,7 @@ export const deleteRoomUserApi = async (body: {
 }
 
 export const addRoomUserApi = async (body: {
-  phoneNumber: string
+  userId: string
   roomId: string
 }) => {
   const res = await instance.post<BaseResponse<{}>>('api_user_room', body)

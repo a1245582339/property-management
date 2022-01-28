@@ -44,7 +44,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
   const onDeleteButtonClick = async (user: User) => {
     setDeleteLoading(true)
     const res = await deleteRoomUserApi({
-      phoneNumber: user.phoneNumber,
+      userId: user._id,
       roomId,
     })
     if (res.code === 0) {
@@ -61,7 +61,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
   const onConfirmAddUser = async () => {
     message.loading('添加中...')
     const res = await addRoomUserApi({
-      phoneNumber: selectedUser!.phoneNumber,
+      userId: selectedUser!._id,
       roomId,
     })
     if (res.code === 0) {

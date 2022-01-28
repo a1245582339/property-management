@@ -8,16 +8,16 @@ export enum Role {
 export default class AdminUser extends Service {
   public async genarateToken(query: { email: string, password: string }) {
     const adminUser = await this.app.knex('admin').where({ ...query, is_del: 0 });
-    if (adminUser) {
+    if (adminUser && adminUser.length) {
       const uuidStr = v4();
-      return { adminUser, token: uuidStr };
+      return { _id: adminUser[0]._id, token: uuidStr };
     }
     return {};
   }
 
   public async getAdminUserInfo(query: { _id: number }) {
-    const res = await this.app.knex('admin').where({ _id: query, is_del: 0 }).select('name', 'email', 'role');
-    return res;
+    const res = await this.app.knex('admin').where({ _id: query._id, is_del: 0 }).select('name', 'email', 'role');
+    return res[0];
   }
   public async getAdminUserList(query: { name: string, page: number }) {
     const res = await this.app.knex('admin').where('name', 'like', `%${query.name}%`).offset(query.page * 20)
@@ -26,13 +26,13 @@ export default class AdminUser extends Service {
     return res;
   }
   public async createAdminUser({ name, email, role }: { name: string, email: string, role: Role }) {
-    const exist = await this.app.knex('admin').where({ email });
-    if (exist) {
+    const res = await this.app.knex('admin').where({ email });
+    if (res && res.length) {
       return {
         code: 2,
       };
     }
-    await this.app.knex('admin').insert({ email, name, pasword: '670b14728ad9902aecba32e22fa4f6bd', role });
+    await this.app.knex('admin').insert({ email, name, password: '670b14728ad9902aecba32e22fa4f6bd', role });
     return {
       code: 0,
     };
@@ -46,7 +46,7 @@ export default class AdminUser extends Service {
   public async updateAdminUser({ _id, name, password, role }: { _id: number, name?: string, password?: string, role?: string }) {
     const updateData = { name, role, password };
     Object.keys(updateData).forEach(key => {	// 遍历要修改的数据
-      if (updateData[key] !== undefined) {
+      if (updateData[key] === undefined) {
         delete updateData[key];
       }
     });
@@ -56,8 +56,8 @@ export default class AdminUser extends Service {
     };
   }
   public async changePassword({ _id, oldPassword, newPassword }: { _id: number, oldPassword: string, newPassword: string }) {
-    const user = this.app.knex('admin').where({ _id, password: oldPassword, is_del: 0 });
-    if (user) {
+    const user = await this.app.knex('admin').where({ _id, password: oldPassword, is_del: 0 });
+    if (user && user.length) {
       const res = await this.updateAdminUser({ _id, password: newPassword });
       return res;
     }
