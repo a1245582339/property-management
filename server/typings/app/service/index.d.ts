@@ -9,6 +9,7 @@ type AutoInstanceType<T, U = T extends CanExportFunc ? T : T extends AnyFunc ? R
 import ExportAdminUser from '../../../app/service/adminUser';
 import ExportBuilding from '../../../app/service/building';
 import ExportClientUser from '../../../app/service/clientUser';
+import ExportNotice from '../../../app/service/notice';
 import ExportParking from '../../../app/service/parking';
 import ExportRoom from '../../../app/service/room';
 import ExportUnit from '../../../app/service/unit';
@@ -19,6 +20,7 @@ declare module 'egg' {
     adminUser: AutoInstanceType<typeof ExportAdminUser>;
     building: AutoInstanceType<typeof ExportBuilding>;
     clientUser: AutoInstanceType<typeof ExportClientUser>;
+    notice: AutoInstanceType<typeof ExportNotice>;
     parking: AutoInstanceType<typeof ExportParking>;
     room: AutoInstanceType<typeof ExportRoom>;
     unit: AutoInstanceType<typeof ExportUnit>;

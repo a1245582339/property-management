@@ -160,7 +160,7 @@ const Admin: React.FC = () => {
         ),
       },
     ],
-    [resetPasswordLoading, deleteLoading]
+    [resetPasswordLoading, deleteLoading, tableData]
   )
   const getAdminList = useCallback(async () => {
     setLoading(true)
@@ -192,11 +192,12 @@ const Admin: React.FC = () => {
       </Button>
       <Table
         pagination={{
-          onChange: (page) => {
-            setPage(page)
-          },
+          total,
           pageSize: 20,
-          total: total,
+          current: page + 1,
+          onChange: (page) => {
+            setPage(page - 1)
+          },
         }}
         rowKey={(record) => record._id!}
         loading={loading}

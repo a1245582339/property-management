@@ -3,6 +3,7 @@ import instance, { BaseResponse } from './config'
 export const fetchParkingApi = async (query: {
   phoneNumber: string
   page: number
+  empty?: boolean
 }) => {
   const res = await instance.get<
     BaseResponse<{ list: Parking[]; total: number }>

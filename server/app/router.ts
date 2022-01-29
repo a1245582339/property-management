@@ -94,4 +94,10 @@ export default (app: Application) => {
   router.post('/api/parking', adminAuthMiddleware, controller.parking.createParking);
   router.put('/api/parking', adminAuthMiddleware, controller.parking.updateParking);
   router.del('/api/parking', adminAuthMiddleware, controller.parking.delParking);
+
+  /* Notice */
+  router.get('/api/notice', adminAuthMiddleware, controller.notice.getNoticeList);
+  router.get('/api/currNotice', clientOrAdminAuthMiddleware, controller.notice.getShowNotice);
+  router.post('/api/notice', adminAuthMiddleware, controller.notice.createNotice);
+  router.put('/api/notice', adminAuthMiddleware, controller.notice.updateNotice);
 };

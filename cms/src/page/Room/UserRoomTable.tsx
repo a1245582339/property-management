@@ -120,7 +120,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
         ),
       },
     ],
-    [roomId]
+    [roomId, userData]
   )
 
   return (

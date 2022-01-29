@@ -78,7 +78,7 @@ const User: React.FC = () => {
         },
       },
     ],
-    []
+    [tableData]
   )
   return (
     <>
@@ -91,11 +91,12 @@ const User: React.FC = () => {
       />
       <Table
         pagination={{
-          onChange: (page) => {
-            setPage(page)
-          },
+          total,
           pageSize: 20,
-          total: total,
+          current: page + 1,
+          onChange: (page) => {
+            setPage(page - 1)
+          },
         }}
         rowKey={(record) => record._id!}
         loading={loading}

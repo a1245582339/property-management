@@ -7,6 +7,7 @@ import {
   Table,
   Tag,
   Modal,
+  Switch,
 } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -18,6 +19,7 @@ import {
 } from '../../api/parking'
 import { fetchUserListApi } from '../../api/user'
 import User from '../User/User'
+import './Parking.less'
 
 export type Parking = {
   _id: number
@@ -41,6 +43,8 @@ const Parking: React.FC = () => {
   const [changeUserModalShow, setChangeUserModalShow] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [carNumber, setCarNumber] = useState('')
+  const [onlyShowEmpty, setOnlyShowEmpty] = useState(false)
+
   const onDeleteButtonClick = async (parking: Parking) => {
     setDeleteLoading(true)
     const res = await deleteParkingApi({ _id: parking._id })
@@ -51,13 +55,17 @@ const Parking: React.FC = () => {
   }
   const getParking = useCallback(async () => {
     setLoading(true)
-    const res = await fetchParkingApi({ page, phoneNumber })
+    const res = await fetchParkingApi({
+      page,
+      phoneNumber,
+      empty: onlyShowEmpty || undefined,
+    })
     if (res.code === 0) {
       setTableData(res.data.list)
       setTotal(res.data.total)
       setLoading(false)
     }
-  }, [page, phoneNumber])
+  }, [page, phoneNumber, onlyShowEmpty])
   useEffect(() => {
     getParking()
   }, [getParking])
@@ -187,10 +195,11 @@ const Parking: React.FC = () => {
     <>
       <Search
         placeholder="请输入手机号搜索"
-        style={{ width: 300, marginBottom: 20 }}
+        style={{ width: 300 }}
         onSearch={(value) => setPhoneNumber(value)}
       />
       <Button
+        style={{ marginLeft: 30 }}
         type="primary"
         onClick={() => {
           setAddModalShow(true)
@@ -198,8 +207,26 @@ const Parking: React.FC = () => {
       >
         添加车位
       </Button>
+      <div className="switch">
+        只展示空车位
+        <Switch
+          style={{ marginLeft: 10 }}
+          checked={onlyShowEmpty}
+          onChange={(value) => {
+            setOnlyShowEmpty(value)
+          }}
+        />
+      </div>
+
       <Table
-        pagination={{ total, onChange: setPage }}
+        pagination={{
+          total,
+          pageSize: 20,
+          current: page + 1,
+          onChange: (page) => {
+            setPage(page - 1)
+          },
+        }}
         loading={loading}
         columns={colunms}
         dataSource={tableData}
