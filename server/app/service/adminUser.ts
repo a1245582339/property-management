@@ -16,14 +16,19 @@ export default class AdminUser extends Service {
   }
 
   public async getAdminUserInfo(query: { _id: number }) {
-    const res = await this.app.knex('admin').where({ _id: query._id, is_del: 0 }).select('name', 'email', 'role');
+    const res = await this.app.knex('admin').where({ _id: query._id, is_del: 0 }).select('_id', 'name', 'email', 'role');
     return res[0];
   }
   public async getAdminUserList(query: { name: string, page: number }) {
-    const res = await this.app.knex('admin').where('name', 'like', `%${query.name}%`).offset(query.page * 20)
+    const list = await this.app.knex('admin').where('name', 'like', `%${query.name}%`)
+      .andWhere({ is_del: 0 })
+      .offset(query.page * 20)
       .limit(20)
-      .select('name', 'email', 'role');
-    return res;
+      .select('_id', 'name', 'email', 'role');
+    const total = (await this.app.knex('admin').where('name', 'like', `%${query.name}%`).andWhere({ is_del: 0 })).length;
+    return {
+      list, total,
+    };
   }
   public async createAdminUser({ name, email, role }: { name: string, email: string, role: Role }) {
     const res = await this.app.knex('admin').where({ email });
@@ -50,7 +55,7 @@ export default class AdminUser extends Service {
         delete updateData[key];
       }
     });
-    await this.app.knex('admin').where({ _id }).update(updateData);
+    await this.app.knex('admin').where({ _id, is_del: 0 }).update(updateData);
     return {
       code: 0,
     };

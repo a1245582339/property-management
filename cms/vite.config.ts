@@ -23,11 +23,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '^/api_*': {
-        target: 'https://qcsi7o.api.cloudendpoint.cn',
-        changeOrigin: true,
-      },
-      '^/api/*': {
+      // '^/api_*': {
+      //   target: 'https://qcsi7o.api.cloudendpoint.cn',
+      //   changeOrigin: true,
+      // },
+      '/api': {
         target: 'http://127.0.0.1:7001',
         changeOrigin: true,
       },

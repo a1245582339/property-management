@@ -15,7 +15,7 @@ export enum Role {
 }
 
 export type AdminUserInfo = {
-  _id?: string
+  _id?: number
   email: string
   name: string
   role: Role

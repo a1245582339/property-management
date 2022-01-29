@@ -10,7 +10,7 @@ export const fetchParkingApi = async (query: {
   return res.data
 }
 
-export const deleteParkingApi = async (query: { _id: string }) => {
+export const deleteParkingApi = async (query: { _id: number }) => {
   const res = await instance.delete<BaseResponse<{}>>('', { params: query })
   return res.data
 }

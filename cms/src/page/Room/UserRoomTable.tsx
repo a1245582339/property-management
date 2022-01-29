@@ -18,7 +18,7 @@ import { fetchUserListApi } from '../../api/user'
 import User from '../User/User'
 
 type Props = {
-  roomId: string
+  roomId: number
 }
 const { Search } = Input
 export const UserRoomTable: React.FC<Props> = ({ roomId }) => {

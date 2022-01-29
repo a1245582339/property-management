@@ -1,7 +1,6 @@
 import { Button, Card, Descriptions, Form, Input, message } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import md5 from 'md5'
-import { useState } from 'react'
 import { changePassword } from '../../api/admin'
 import { useSelector } from '../../store'
 import { Role } from '../Dashboard'
@@ -22,8 +21,8 @@ const Me: React.FC = () => {
       if (res.code === 0) {
         message.success('修改成功')
         form.resetFields()
-      } else {
-        message.error(`修改失败 ${res.msg}`)
+      } else if (res.code === 7) {
+        message.error('修改失败,旧密码错误')
       }
     })
   }

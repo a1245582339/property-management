@@ -7,14 +7,14 @@ export const fetchBuildingApi = async () => {
   return res.data
 }
 
-export const fetchUnitApi = async (query: { buildingId: string }) => {
+export const fetchUnitApi = async (query: { buildingId: number }) => {
   const res = await instance.get<BaseResponse<Unit[]>>('api_unit', {
     params: query,
   })
   return res.data
 }
 
-export const fetchRoomApi = async (query: { unitId: string }) => {
+export const fetchRoomApi = async (query: { unitId: number }) => {
   const res = await instance.get<BaseResponse<Room[]>>('api_room', {
     params: query,
   })
@@ -25,7 +25,7 @@ export function fetchRoomUserApi(query: {
   phoneNumber: string
 }): Promise<BaseResponse<{ building: Building; unit: Unit; room: Room }[]>>
 export function fetchRoomUserApi(query: {
-  roomId: string
+  roomId: number
 }): Promise<BaseResponse<User[]>>
 export async function fetchRoomUserApi(query: any) {
   const res = await instance.get('api_user_room', { params: query })
@@ -33,8 +33,8 @@ export async function fetchRoomUserApi(query: any) {
 }
 
 export const deleteRoomUserApi = async (body: {
-  userId: string
-  roomId: string
+  userId: number
+  roomId: number
 }) => {
   const res = await instance.post<BaseResponse<User[]>>(
     'api_delete_user_room',
@@ -44,8 +44,8 @@ export const deleteRoomUserApi = async (body: {
 }
 
 export const addRoomUserApi = async (body: {
-  userId: string
-  roomId: string
+  userId: number
+  roomId: number
 }) => {
   const res = await instance.post<BaseResponse<{}>>('api_user_room', body)
   return res.data

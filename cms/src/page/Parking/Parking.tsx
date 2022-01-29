@@ -10,7 +10,7 @@ import {
 import User from '../User/User'
 
 export type Parking = {
-  _id: string
+  _id: number
   cardNumber?: string
   parkingCode: string
   user?: User

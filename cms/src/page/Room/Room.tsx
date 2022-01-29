@@ -5,10 +5,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fetchBuildingApi, fetchRoomApi, fetchUnitApi } from '../../api/room'
 import { UserRoomTable } from './UserRoomTable'
 const { Sider, Content } = Layout
-export type Room = { _id: string; num: number }
-export type Unit = { _id: string; num: number }
+export type Room = { _id: number; num: number }
+export type Unit = { _id: number; num: number }
 export type Building = {
-  _id: string
+  _id: number
   num: number
   floor: number
 }
@@ -29,7 +29,7 @@ const community: DataNode = {
 }
 const Room: React.FC = () => {
   const [treeData, setTreeData] = useState<DataNode[]>([community])
-  const [currentRoomId, setCurrentRoomId] = useState('')
+  const [currentRoomId, setCurrentRoomId] = useState(0)
   const [rightMenuPosition, setRightMenuPosition] = useState([0, 0])
   const [rightMenuShow, setRightMenuShow] = useState(false)
   const [currentRightClickNode, setCurrentRightClickNode] = useState<
@@ -47,7 +47,7 @@ const Room: React.FC = () => {
               return {
                 title: `${building.num}号楼`,
                 data: building,
-                key: building._id,
+                key: building._id.toString(),
                 type: 'building',
               }
             }),
@@ -76,7 +76,7 @@ const Room: React.FC = () => {
               return {
                 title: `${unit.num}单元`,
                 data: unit,
-                key: unit._id,
+                key: unit._id.toString(),
                 type: 'unit',
                 children: [],
               }
@@ -99,7 +99,7 @@ const Room: React.FC = () => {
               return {
                 title: `${room.num}号`,
                 data: room,
-                key: room._id,
+                key: room._id.toString(),
                 type: 'room',
                 children: [],
                 isLeaf: true,

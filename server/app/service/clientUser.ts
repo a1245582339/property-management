@@ -27,9 +27,14 @@ export default class ClientUser extends Service {
   }
 
 
-  public async userList(query: { phoneNumber: string }) {
-    const user = await this.app.knex('user').where('phoneNumber', 'like', `%${query.phoneNumber}%`);
-    return user;
+  public async userList(query: { phoneNumber: string, page: number }) {
+    const list = await this.app.knex('user').where('phoneNumber', 'like', `%${query.phoneNumber}%`).limit(20)
+      .offset(20 * query.page);
+    const total = (await this.app.knex('user').where('phoneNumber', 'like', `%${query.phoneNumber}%`)).length;
+    return {
+      list,
+      total,
+    };
   }
 
   public async updateUser({ _id, avatar, name }: { _id: string, avatar: string, name: string }) {

@@ -3,8 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchUserListApi } from '../../api/user'
 import './User.less'
 type User = {
-  _id: string
-  username: string
+  _id: number
+  name: string
   avatar: string
   phoneNumber: string
 }
@@ -19,7 +19,7 @@ const User: React.FC = () => {
   const [tableData, setTableData] = useState<User[]>([])
   const getUserList = useCallback(() => {
     setLoading(true)
-    fetchUserListApi({ phoneNumber, getList: true }).then((res) => {
+    fetchUserListApi({ phoneNumber, getList: true, page }).then((res) => {
       if (res.code === 0) {
         setTableData(res.data.list)
         setTotal(phoneNumber ? res.data.total : 1)
@@ -43,8 +43,8 @@ const User: React.FC = () => {
       },
       {
         title: '姓名',
-        dataIndex: 'username',
-        key: 'username',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
         title: '手机号',

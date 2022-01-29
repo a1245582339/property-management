@@ -6,7 +6,6 @@ import { loginApi } from '../../api/admin'
 import md5 from 'md5'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
-import { authRouter } from '../../router'
 
 export type LoginForm = {
   email: string
@@ -14,7 +13,7 @@ export type LoginForm = {
 }
 
 export type AuthResponse = {
-  user_id: string
+  user_id: number
   authorization_token: string
 }
 
@@ -26,9 +25,6 @@ export const Login: React.FC = () => {
       password: md5(value.password),
     })
     if (authResult.code === 0) {
-      Cookies.set('user_id', authResult.data.user_id, {
-        expires: 7,
-      })
       navigate('/dashboard')
     }
   }
