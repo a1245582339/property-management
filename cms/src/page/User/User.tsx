@@ -2,6 +2,7 @@ import { Button, Input, Table } from 'antd'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchUserListApi } from '../../api/user'
 import './User.less'
+import { UserRoomModal } from './UserRoomModal'
 type User = {
   _id: number
   name: string
@@ -17,6 +18,9 @@ const User: React.FC = () => {
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(true)
   const [tableData, setTableData] = useState<User[]>([])
+
+  const [userRoomModalShow, setUserRoomModalShow] = useState(false)
+  const [currentUserId, setCurrentUserId] = useState(0)
   const getUserList = useCallback(() => {
     setLoading(true)
     fetchUserListApi({ phoneNumber, getList: true, page }).then((res) => {
@@ -30,6 +34,10 @@ const User: React.FC = () => {
   useEffect(() => {
     getUserList()
   }, [getUserList])
+
+  const onModalCancel = () => {
+    setUserRoomModalShow(false)
+  }
   const columns = useMemo(
     () => [
       {
@@ -50,6 +58,24 @@ const User: React.FC = () => {
         title: '手机号',
         dataIndex: 'phoneNumber',
         key: 'phoneNumber',
+      },
+      {
+        title: '房间',
+        dataIndex: 'phoneNumber',
+        key: 'phoneNumber',
+        render(_: any, record: User) {
+          return (
+            <Button
+              type="link"
+              onClick={() => {
+                setUserRoomModalShow(true)
+                setCurrentUserId(record._id)
+              }}
+            >
+              查看此人房间
+            </Button>
+          )
+        },
       },
     ],
     []
@@ -76,6 +102,11 @@ const User: React.FC = () => {
         columns={columns}
         dataSource={tableData}
       ></Table>
+      <UserRoomModal
+        show={userRoomModalShow}
+        onCancel={onModalCancel}
+        userId={currentUserId}
+      />
     </>
   )
 }

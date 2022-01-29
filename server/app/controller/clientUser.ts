@@ -24,7 +24,7 @@ export default class ClientUser extends Controller {
       };
     } else {
       this.ctx.body = {
-        data: res[0],
+        data: res.list[0],
         code: 0,
       };
     }

@@ -5,7 +5,7 @@ export default class Room extends Service {
     return res;
   }
   public async createRoom({ num, unitId }: { num: string; unitId: number }) {
-    await this.app.knex('room').insert({ num, unitId });
+    await this.app.knex('room').insert({ num, unit_id: unitId });
     return { code: 0 };
   }
   public async delRoom({ _id }: { _id: number }) {

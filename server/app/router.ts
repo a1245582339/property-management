@@ -48,20 +48,20 @@ export default (app: Application) => {
   router.post('/api/client/logout', controller.clientUser.logout);
   router.get(
     '/api/client/user',
-    adminAuthMiddleware,
+    clientOrAdminAuthMiddleware,
     controller.clientUser.userList,
   );
-  router.put('/api/client/user', controller.clientUser.updateUser);
+  router.put('/api/client/user', clientOrAdminAuthMiddleware, controller.clientUser.updateUser);
 
   /* Building */
-  router.get('/api/buidling', controller.building.getBuildingList);
+  router.get('/api/building', controller.building.getBuildingList);
   router.post(
-    '/api/buidling',
+    '/api/building',
     adminAuthMiddleware,
     controller.building.createBuilding,
   );
   router.del(
-    '/api/buidling',
+    '/api/building',
     adminAuthMiddleware,
     controller.building.delBuilding,
   );
@@ -71,7 +71,7 @@ export default (app: Application) => {
   router.post('/api/unit', adminAuthMiddleware, controller.unit.createUnit);
   router.del('/api/unit', adminAuthMiddleware, controller.unit.delUnit);
 
-  /* Building */
+  /* Room */
   router.get('/api/room', controller.room.getRoomList);
   router.post('/api/room', adminAuthMiddleware, controller.room.createRoom);
   router.del('/api/room', adminAuthMiddleware, controller.room.delRoom);

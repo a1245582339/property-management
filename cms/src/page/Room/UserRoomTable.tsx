@@ -41,19 +41,23 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
   useEffect(() => {
     getUserRoomData()
   }, [getUserRoomData])
-  const onDeleteButtonClick = async (user: User) => {
-    setDeleteLoading(true)
-    const res = await deleteRoomUserApi({
-      userId: user._id,
-      roomId,
-    })
-    if (res.code === 0) {
-      message.success('删除成功')
-      setDeleteLoading(false)
-    }
-  }
+  const onDeleteButtonClick = useCallback(
+    async (user: User) => {
+      setDeleteLoading(true)
+      const res = await deleteRoomUserApi({
+        userId: user._id,
+        roomId,
+      })
+      if (res.code === 0) {
+        message.success('删除成功')
+        setDeleteLoading(false)
+        getUserRoomData()
+      }
+    },
+    [roomId]
+  )
   const onSearch = async (value: string) => {
-    const res = await fetchUserListApi({ phoneNumber: value })
+    const res = await fetchUserListApi({ phoneNumber: value, page: 0 })
     if (res.code === 0) {
       setSelectedUser(res.data)
     }
@@ -77,8 +81,8 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
     () => [
       {
         title: '姓名',
-        dataIndex: 'username',
-        key: 'username',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
         title: '手机号',
@@ -106,7 +110,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
                 </Button>
               </div>
             }
-            title={`确定删除将用户 ${record.username} 从该房间中删除？`}
+            title={`确定删除将用户 ${record.name} 从该房间中删除？`}
             trigger="click"
           >
             <Button size="small" danger type="primary">
@@ -116,7 +120,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
         ),
       },
     ],
-    []
+    [roomId]
   )
 
   return (
@@ -144,7 +148,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
         onCancel={onModalCancel}
         onOk={onConfirmAddUser}
         okButtonProps={{
-          disabled: false,
+          disabled: !selectedUser,
         }}
         destroyOnClose
       >
@@ -168,7 +172,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
                 src={selectedUser.avatar}
                 style={{ marginRight: 4 }}
               />
-              {selectedUser.username}
+              {selectedUser.name}
             </Tag>
           )}
         </div>

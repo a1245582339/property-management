@@ -1,8 +1,18 @@
 import { HomeOutlined } from '@ant-design/icons'
-import { Card, Input, Layout, Menu, message, Modal, Tree } from 'antd'
+import { Card, Input, Layout, Menu, message, Modal, Spin, Tree } from 'antd'
 import { EventDataNode } from 'antd/lib/tree'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { fetchBuildingApi, fetchRoomApi, fetchUnitApi } from '../../api/room'
+import {
+  addBuildingApi,
+  addUnitApi,
+  addRoomApi,
+  fetchBuildingApi,
+  fetchRoomApi,
+  fetchUnitApi,
+  delBuildingApi,
+  delRoomApi,
+  delUnitApi,
+} from '../../api/room'
 import { UserRoomTable } from './UserRoomTable'
 const { Sider, Content } = Layout
 export type Room = { _id: number; num: number }
@@ -36,8 +46,13 @@ const Room: React.FC = () => {
     (EventDataNode & DataNode) | null
   >(null)
   const [createNodeModalShow, setCreateNodeModalShow] = useState(false)
+  const [newNumValue, setNewNumValue] = useState('')
+  const [treeLoading, setTreeLoading] = useState(true)
+  const [delConfirmModalShow, setDelConfirmModalShow] = useState(false)
+
   const treeBarRef = useRef<HTMLDivElement>(null)
   const getBuildings = useCallback(() => {
+    setTreeLoading(true)
     fetchBuildingApi().then((res) => {
       if (res.code === 0) {
         setTreeData([
@@ -47,12 +62,13 @@ const Room: React.FC = () => {
               return {
                 title: `${building.num}号楼`,
                 data: building,
-                key: building._id.toString(),
+                key: 'building' + building._id.toString(),
                 type: 'building',
               }
             }),
           },
         ])
+        setTreeLoading(false)
       }
     })
   }, [])
@@ -60,9 +76,8 @@ const Room: React.FC = () => {
     getBuildings()
   }, [getBuildings])
   const onLoadData = async (treeNode: EventDataNode) => {
-    const hideLoading = message.loading('加载中...')
     const currNode = treeNode as EventDataNode & DataNode
-
+    const hideLoading = currNode.type !== 'root' && message.loading('加载中...')
     if (currNode.type === 'building') {
       const res = await fetchUnitApi({ buildingId: currNode.data!._id })
       if (res.code === 0) {
@@ -71,12 +86,13 @@ const Room: React.FC = () => {
           const [_, __, buildingIndex] = currNode.pos
             .split('-')
             .map((item) => Number(item))
+          console.log(newTree[0].children, buildingIndex)
           newTree[0].children![buildingIndex].children = res.data.map(
             (unit) => {
               return {
                 title: `${unit.num}单元`,
                 data: unit,
-                key: unit._id.toString(),
+                key: 'unit' + unit._id.toString(),
                 type: 'unit',
                 children: [],
               }
@@ -99,7 +115,7 @@ const Room: React.FC = () => {
               return {
                 title: `${room.num}号`,
                 data: room,
-                key: room._id.toString(),
+                key: 'room' + room._id.toString(),
                 type: 'room',
                 children: [],
                 isLeaf: true,
@@ -111,7 +127,7 @@ const Room: React.FC = () => {
         })
       }
     }
-    hideLoading()
+    hideLoading && hideLoading()
   }
   const onNodeSelect = (
     _: any,
@@ -137,11 +153,7 @@ const Room: React.FC = () => {
   }) => {
     info.event.stopPropagation()
     const node = info.node as EventDataNode & DataNode
-    if (
-      node.type === 'root' ||
-      node.type === 'building' ||
-      node.type === 'unit'
-    ) {
+    if (node.type !== 'root') {
       const treeBarPosition = treeBarRef.current?.getBoundingClientRect()
       const { pageX, pageY } = info.event
       setRightMenuPosition([
@@ -171,7 +183,38 @@ const Room: React.FC = () => {
     setCreateNodeModalShow(false)
     setCurrentRightClickNode(null)
   }
-  const onConfirmCreateNode = () => {}
+  const onConfirmCreateNode = async () => {
+    if (!newNumValue) {
+      message.warn('请输入编号！')
+      return
+    }
+    const pNode = currentRightClickNode!
+    const { type, data } = pNode
+    if (type === 'root') {
+      await addBuildingApi({ num: newNumValue })
+    } else if (type === 'building') {
+      await addUnitApi({ num: newNumValue, buildingId: data!._id })
+    } else if (type === 'unit') {
+      await addRoomApi({ num: newNumValue, unitId: data!._id })
+    }
+    setTreeData([community])
+    onCancelCreateNode()
+    getBuildings()
+  }
+  const onDeleteTreeNode = async () => {
+    const pNode = currentRightClickNode!
+    const { type, data } = pNode
+    if (type === 'building') {
+      await delBuildingApi({ _id: data!._id })
+    } else if (type === 'unit') {
+      await delUnitApi({ _id: data!._id })
+    } else if (type === 'room') {
+      await delRoomApi({ _id: data!._id })
+    }
+    setTreeData([community])
+    setDelConfirmModalShow(false)
+    getBuildings()
+  }
   return (
     <>
       <Layout style={{ padding: 30, height: 800 }}>
@@ -201,30 +244,60 @@ const Room: React.FC = () => {
               bodyStyle={{ padding: 0 }}
             >
               <Menu>
-                <Menu.Item key="1" onClick={onClickCreateChild}>
-                  创建子条目
+                {currentRightClickNode?.type !== 'room' && (
+                  <Menu.Item key="1" onClick={onClickCreateChild}>
+                    创建子条目
+                  </Menu.Item>
+                )}
+                <Menu.Item
+                  key="2"
+                  onClick={() => {
+                    setDelConfirmModalShow(true)
+                  }}
+                >
+                  删除
                 </Menu.Item>
-                <Menu.Item key="2">删除</Menu.Item>
               </Menu>
             </Card>
           )}
-          <Tree
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-            showIcon
-            onRightClick={onRightClick}
-            loadData={onLoadData}
-            treeData={treeData}
-            onSelect={onNodeSelect}
-          />
+          {!treeLoading ? (
+            <Tree
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+              showIcon
+              onRightClick={onRightClick}
+              loadData={onLoadData}
+              treeData={treeData}
+              onSelect={onNodeSelect}
+            />
+          ) : (
+            <Spin spinning={treeLoading} />
+          )}
           <Modal
             visible={createNodeModalShow}
             title={`创建${nodeToStr}`}
             onCancel={onCancelCreateNode}
             onOk={onConfirmCreateNode}
           >
-            <Input placeholder={`请输入${nodeToStr}编号`} />
+            <Input
+              onChange={(e) => {
+                setNewNumValue(e.target.value)
+              }}
+              placeholder={`请输入${nodeToStr}编号`}
+            />
+          </Modal>
+          <Modal
+            title="确认删除？"
+            visible={delConfirmModalShow}
+            onCancel={() => {
+              setDelConfirmModalShow(false)
+            }}
+            onOk={() => {
+              onDeleteTreeNode()
+            }}
+          >
+            此操作将删除当前条目与所有子条目和用户关系，确定删除？
           </Modal>
         </Sider>
         <Layout>
