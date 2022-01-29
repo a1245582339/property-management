@@ -5,25 +5,28 @@ export const fetchParkingApi = async (query: {
   page: number
 }) => {
   const res = await instance.get<
-    BaseResponse<{ data: Parking[]; total: number }>
-  >('', { params: query })
+    BaseResponse<{ list: Parking[]; total: number }>
+  >('/api/parking', { params: query })
   return res.data
 }
 
 export const deleteParkingApi = async (query: { _id: number }) => {
-  const res = await instance.delete<BaseResponse<{}>>('', { params: query })
+  const res = await instance.delete<BaseResponse<{}>>('/api/parking', {
+    params: query,
+  })
   return res.data
 }
 
 export const createParkingApi = async (body: { parkingCode: string }) => {
-  const res = await instance.post<BaseResponse<{}>>('', body)
+  const res = await instance.post<BaseResponse<{}>>('/api/parking', body)
   return res.data
 }
 
 export const updateParkingApi = async (body: {
-  carNumber: string
-  phoneNumber: string
+  _id: number
+  carNumber: string | null
+  userId: number | null
 }) => {
-  const res = await instance.put<BaseResponse<{}>>('', body)
+  const res = await instance.put<BaseResponse<{}>>('/api/parking', body)
   return res.data
 }

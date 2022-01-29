@@ -182,6 +182,7 @@ const Room: React.FC = () => {
   const onCancelCreateNode = () => {
     setCreateNodeModalShow(false)
     setCurrentRightClickNode(null)
+    setNewNumValue('')
   }
   const onConfirmCreateNode = async () => {
     if (!newNumValue) {

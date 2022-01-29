@@ -15,7 +15,7 @@ export default class Parking extends Controller {
   public async createParking() {
     const { parkingCode } = this.ctx.request.body;
     const res = await this.ctx.service.parking.createParking({ parkingCode });
-    return res;
+    this.ctx.body = res;
   }
   public async updateParking() {
     const { _id, carNumber, userId } = this.ctx.request.body;
@@ -24,11 +24,11 @@ export default class Parking extends Controller {
       carNumber,
       userId,
     });
-    return res;
+    this.ctx.body = res;
   }
   public async delParking() {
     const { _id } = this.ctx.request.query;
     const res = await this.ctx.service.parking.deleteParking({ _id: Number(_id) });
-    return res;
+    this.ctx.body = res;
   }
 }

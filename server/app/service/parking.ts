@@ -13,6 +13,7 @@ export default class Parking extends Service {
       const list = await this.app
         .knex('user')
         .where('phoneNumber', 'like', `%${phoneNumber}%`)
+        .andWhere({ is_del: 0 })
         .leftJoin('parking', 'parking.user_id', 'user._id')
         .limit(20)
         .offset(20 * page);
@@ -26,16 +27,19 @@ export default class Parking extends Service {
       const list = await this.app
         .knex('parking')
         .whereNull('user_id')
+        .andWhere({ is_del: 0 })
         .limit(20)
         .offset(20 * page);
       const total = (await this.app.knex('parking')
-        .whereNull('user_id'));
+        .whereNull('user_id').andWhere({ is_del: 0 }));
       return {
         list, total,
       };
     }
     const list = await this.app
       .knex('parking')
+      .select('parking.*', 'user.name', 'user.phoneNumber')
+      .where({ is_del: 0 })
       .leftJoin('user', 'parking.user_id', 'user._id')
       .limit(20)
       .offset(20 * page);

@@ -1,19 +1,31 @@
-import { Button, Input, message, Popover, Table } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
+import {
+  Avatar,
+  Button,
+  Input,
+  message,
+  Popover,
+  Table,
+  Tag,
+  Modal,
+} from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   createParkingApi,
   deleteParkingApi,
   fetchParkingApi,
+  updateParkingApi,
 } from '../../api/parking'
+import { fetchUserListApi } from '../../api/user'
 import User from '../User/User'
 
 export type Parking = {
   _id: number
-  cardNumber?: string
-  parkingCode: string
-  user?: User
+  card_number?: string
+  parking_code: string
+  user_id: number
+  phoneNumber: string
+  name: string
 }
 const { Search } = Input
 const Parking: React.FC = () => {
@@ -25,6 +37,10 @@ const Parking: React.FC = () => {
   const [deleteLoading, setDeleteLoading] = useState(false)
   const [addModalShow, setAddModalShow] = useState(false)
   const [newParkingCode, setNewParkingCode] = useState('')
+  const [currentParking, setCurrentParking] = useState<Parking | null>(null)
+  const [changeUserModalShow, setChangeUserModalShow] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [carNumber, setCarNumber] = useState('')
   const onDeleteButtonClick = async (parking: Parking) => {
     setDeleteLoading(true)
     const res = await deleteParkingApi({ _id: parking._id })
@@ -37,7 +53,7 @@ const Parking: React.FC = () => {
     setLoading(true)
     const res = await fetchParkingApi({ page, phoneNumber })
     if (res.code === 0) {
-      setTableData(res.data.data)
+      setTableData(res.data.list)
       setTotal(res.data.total)
       setLoading(false)
     }
@@ -45,22 +61,37 @@ const Parking: React.FC = () => {
   useEffect(() => {
     getParking()
   }, [getParking])
+  const onChangeUserClick = (parking: Parking) => {
+    setCurrentParking(parking)
+    setChangeUserModalShow(true)
+  }
   const colunms = useMemo<ColumnsType<Parking>>(
     () => [
       {
         title: '车位号',
-        dataIndex: 'parkingCode',
-        key: 'parkingCode',
+        dataIndex: 'parking_code',
+        key: 'parking_code',
       },
       {
         title: '牌照号',
-        dataIndex: 'cardNumber',
-        key: 'cardNumber',
+        dataIndex: 'car_number',
+        key: 'car_number',
+        render(carNumber, record) {
+          return carNumber || '--'
+        },
       },
       {
         title: '所有者',
-        dataIndex: 'user.username',
+        dataIndex: 'username',
         key: 'username',
+        render(_, record) {
+          return record.user_id
+            ? `${record.name} (${record.phoneNumber
+                .split('')
+                .map((num, index) => (index > 2 && index < 7 ? '*' : num))
+                .join('')})`
+            : '--'
+        },
       },
       {
         title: '操作',
@@ -69,7 +100,14 @@ const Parking: React.FC = () => {
         render(_, record) {
           return (
             <>
-              <Button>更换所有者</Button>
+              <Button
+                size="small"
+                onClick={() => {
+                  onChangeUserClick(record)
+                }}
+              >
+                更换所有者
+              </Button>
               <Popover
                 content={
                   <div>
@@ -89,7 +127,12 @@ const Parking: React.FC = () => {
                 title={`确定删除车位？`}
                 trigger="click"
               >
-                <Button size="small" danger type="primary">
+                <Button
+                  style={{ marginLeft: 4 }}
+                  size="small"
+                  danger
+                  type="primary"
+                >
                   删除
                 </Button>
               </Popover>
@@ -112,6 +155,34 @@ const Parking: React.FC = () => {
       getParking()
     }
   }
+  const onChangeUserModalCancel = () => {
+    setChangeUserModalShow(false)
+    setCurrentParking(null)
+    setCarNumber('')
+  }
+  const onChangeUserModalConfirm = async () => {
+    if ((!selectedUser && carNumber) || (selectedUser && !carNumber)) {
+      message.warn('请确保车牌号与用户同时为空或不为空')
+      return
+    }
+    const res = await updateParkingApi({
+      _id: currentParking!._id,
+      carNumber: carNumber || null,
+      userId: selectedUser ? selectedUser._id : null,
+    })
+    if (res.code === 0) {
+      message.success('更新成功')
+      setPage(0)
+      getParking()
+      onChangeUserModalCancel()
+    }
+  }
+  const onSearch = async (value: string) => {
+    const res = await fetchUserListApi({ phoneNumber: value, page: 0 })
+    if (res.code === 0) {
+      setSelectedUser(res.data)
+    }
+  }
   return (
     <>
       <Search
@@ -119,7 +190,12 @@ const Parking: React.FC = () => {
         style={{ width: 300, marginBottom: 20 }}
         onSearch={(value) => setPhoneNumber(value)}
       />
-      <Button type="primary" onClick={onAddButtonClick}>
+      <Button
+        type="primary"
+        onClick={() => {
+          setAddModalShow(true)
+        }}
+      >
         添加车位
       </Button>
       <Table
@@ -142,6 +218,45 @@ const Parking: React.FC = () => {
           }}
           placeholder="请输入车位编号"
         />
+      </Modal>
+      <Modal
+        title="添加成员"
+        visible={changeUserModalShow}
+        onCancel={onChangeUserModalCancel}
+        onOk={onChangeUserModalConfirm}
+        destroyOnClose
+      >
+        <Input
+          style={{ width: 200, marginBottom: 6 }}
+          onChange={(e) => {
+            setCarNumber(e.target.value)
+          }}
+          placeholder="请输入车牌号"
+        />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Search
+            placeholder="输入手机号搜索用户"
+            onSearch={onSearch}
+            style={{ width: 200 }}
+          />
+          {selectedUser && (
+            <Tag
+              style={{
+                marginLeft: 20,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              color="blue"
+            >
+              <Avatar
+                size={14}
+                src={selectedUser.avatar}
+                style={{ marginRight: 4 }}
+              />
+              {selectedUser.name}
+            </Tag>
+          )}
+        </div>
       </Modal>
     </>
   )
