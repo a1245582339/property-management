@@ -100,4 +100,14 @@ export default (app: Application) => {
   router.get('/api/currNotice', clientOrAdminAuthMiddleware, controller.notice.getShowNotice);
   router.post('/api/notice', adminAuthMiddleware, controller.notice.createNotice);
   router.put('/api/notice', adminAuthMiddleware, controller.notice.updateNotice);
+
+  /* Order */
+  router.get('/api/admin/order', adminAuthMiddleware, controller.order.getOrderList);
+  router.get('/api/client/order', clientOrAdminAuthMiddleware, controller.order.getOrderListByClientUser);
+  router.post('/api/order', adminAuthMiddleware, controller.order.createOrder);
+  router.put('/api/order', adminAuthMiddleware, controller.order.updateOrder);
+
+  /* Message */
+  router.get('/api/message', adminAuthMiddleware, controller.messageBoard.getMessageBoardList);
+  router.get('/api/message', clientOrAdminAuthMiddleware, controller.messageBoard.createMessage);
 };

@@ -31,7 +31,7 @@ export default class ClientUser extends Controller {
   }
   public async updateUser() {
     const cookie = parse(this.ctx.header.cookie as string);
-    const _id = cookie.client_id;
+    const _id = cookie?.client_id;
     const { name, avatar } = this.ctx.request.body;
     const res = await this.ctx.service.clientUser.updateUser({ _id, name, avatar });
     this.ctx.body = res;
