@@ -9,9 +9,7 @@ const instance = axios.create({
 export type BaseResponse<T> = {
   code: number
   data: T
-  msg: string
 }
-const whiteList = ['/login']
 // request拦截器
 instance.interceptors.request.use(
   (config) => {

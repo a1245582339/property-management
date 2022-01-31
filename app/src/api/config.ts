@@ -1,35 +1,28 @@
 import axios from 'axios'
-import { getToken } from '../utils/cookie';
 const instance = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
 })
-const whiteList = ['/login']
 // request拦截器
 instance.interceptors.request.use(
-    config => {
-        config.url = `/api/v1${config.url}`
-        if (getToken() && getToken() !== 'undefined') {
-            config.headers!.Authorization = `Bearer ${getToken()}`
-        } else if (whiteList.indexOf(window.location.pathname) === -1) {
-            window.location.pathname = 'login'
-        }
-        return config
-    },
+    config => config,
     error => error,
 );
 
 // response拦截器
 instance.interceptors.response.use(
-    response => response.data,
+    response => response,
     (error) => {
         if (error?.response?.status === 401) {
-            window.location.pathname = 'login'
+            location.href = `${location.origin}/#/login`
         }
         throw error
     },
 );
-
+export type BaseResponse<T> = {
+    code: number
+    data: T
+}
 
 export default instance;

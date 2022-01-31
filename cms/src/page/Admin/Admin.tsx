@@ -58,7 +58,7 @@ const Admin: React.FC = () => {
         if (res.code === 0) {
           message.success('删除成功')
         } else {
-          message.error(`删除失败 ${res.msg}`)
+          message.error(`删除失败`)
         }
       })
       .finally(() => {

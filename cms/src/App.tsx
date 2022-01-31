@@ -1,5 +1,4 @@
 import { PageHeader } from 'antd'
-import React from 'react'
 import { Suspense, useMemo } from 'react'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './App.less'

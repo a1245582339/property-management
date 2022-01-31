@@ -30,8 +30,7 @@ export default class Order extends Service {
         .offset(20 * page)
         .orderBy('create_time', 'desc');
       const total = (await await this.app.knex('order')
-        .where({ ...query, user_id })
-        .andWhere('user.phoneNumber', 'like', `%${phoneNumber}%`)).length;
+        .where({ ...query, user_id })).length;
       return {
         list, total,
       };

@@ -21,7 +21,9 @@ export default class Order extends Controller {
 
   public async createOrder() {
     const body = this.ctx.request.body;
-    const res = await this.ctx.service.order.createOrder(body);
+    const cookie = parse(this.ctx.header.cookie as string);
+    const user_id = cookie.client_id;
+    const res = await this.ctx.service.order.createOrder({ ...body, user_id });
     this.ctx.body = res;
   }
 

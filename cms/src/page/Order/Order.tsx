@@ -2,6 +2,7 @@ import { Button, Input, message, Popover, Radio, Table } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchOrderListApi, updateOrderApi } from '../../api/order'
+import { timestampToDate } from '../../utils/time'
 import User from '../User/User'
 export enum OrderStatus {
   Created = 1,
@@ -89,6 +90,20 @@ const Order: React.FC = () => {
             return '已处理'
           } else if (status === OrderStatus.Complete) {
             return '已结单'
+          }
+        },
+      },
+      {
+        title: '流转时间',
+        dataIndex: 'time',
+        key: 'time',
+        render(_, record) {
+          if (record.status === OrderStatus.Created) {
+            return timestampToDate(record.create_time)
+          } else if (record.status === OrderStatus.Dealed) {
+            return timestampToDate(record.deal_time)
+          } else if (record.status === OrderStatus.Complete) {
+            return timestampToDate(record.complete_time)
           }
         },
       },
