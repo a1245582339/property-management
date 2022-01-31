@@ -47,6 +47,11 @@ export default (app: Application) => {
   router.post('/api/client/login', controller.clientUser.login);
   router.post('/api/client/logout', controller.clientUser.logout);
   router.get(
+    '/api/client/userList',
+    adminAuthMiddleware,
+    controller.clientUser.userList,
+  );
+  router.get(
     '/api/client/user',
     clientOrAdminAuthMiddleware,
     controller.clientUser.getUserInfo,
@@ -117,4 +122,6 @@ export default (app: Application) => {
 
   /* Statistics */
   router.get('/api/statistics/occupancy', controller.statistics.getOccupancy);
+  router.get('/api/statistics/parking', controller.statistics.getParking);
+  router.get('/api/statistics/order', controller.statistics.getOrder);
 };

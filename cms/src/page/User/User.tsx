@@ -46,7 +46,13 @@ const User: React.FC = () => {
         key: 'avatar',
         width: 100,
         render(src: string) {
-          return <img className="avatar" src={src} alt="" />
+          return (
+            <img
+              className="avatar"
+              src={`http://localhost:7001${src}`}
+              alt=""
+            />
+          )
         },
       },
       {
