@@ -6,21 +6,23 @@ import { useSelector } from '../../store'
 import { Role } from '../Dashboard'
 
 const Me: React.FC = () => {
-  const adminUserInfo = useSelector((state) => state.adminUserInfo)
+  const adminUserInfo = useSelector((state) => state.adminUserInfo) // 获取存在redux中的管理员信息
   const [form] = useForm<{
     newPassword: string
     oldPassword: string
     repeatPassword: string
   }>()
   const onFinish = () => {
+    // 确认提交时获取表单信息
     const formData = form.getFieldsValue()
     changePasswordApi({
+      // 发送旧密码与新密码
       oldPassword: md5(formData.oldPassword),
       newPassword: md5(formData.newPassword),
     }).then((res) => {
       if (res.code === 0) {
         message.success('修改成功')
-        form.resetFields()
+        form.resetFields() // 修改成功后重置表单
       } else if (res.code === 7) {
         message.error('修改失败,旧密码错误')
       }

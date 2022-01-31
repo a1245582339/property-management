@@ -1,0 +1,1320 @@
+{
+  "paper": {
+    "name": "A4",
+    "leftMargin": 0.5,
+    "rightMargin": 0.5,
+    "topMargin": 0.5,
+    "bottomMargin": 0.5,
+    "isPortriat": true
+  },
+  "modelVersion": 2.01,
+  "defaultSchema": "Default",
+  "server": {
+    "objectType": "Server_LOGICAL",
+    "name": "Default",
+    "schemas": [
+      {
+        "objectType": "Schema_LOGICAL",
+        "name": "Default",
+        "tables": [
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.admin",
+            "comment": "",
+            "oldName": "admin",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "email",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "email"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "name",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "name"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "password",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "password"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "role",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "1：超管 2：管理员",
+                "oldName": "role"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "is_del",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "is_del"
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.building",
+            "comment": "",
+            "oldName": "building",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "num",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "num"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "is_del",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "is_del"
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.notice",
+            "comment": "",
+            "oldName": "notice",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "content",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "content"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "show",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "show"
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.user",
+            "comment": "",
+            "oldName": "user",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "name",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "name"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "avatar",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "avatar"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "phoneNumber",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "phoneNumber"
+              }
+            ],
+            "foreignKeys": [],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.order",
+            "comment": "",
+            "oldName": "order",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "title",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "title"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "desc",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "desc"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "user_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "user_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "status",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "1：待接单 2：待处理 3：已结单",
+                "oldName": "status"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "create_time",
+                "type": "NUMERIC",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "create_time"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "deal_time",
+                "type": "NUMERIC",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "Null",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "deal_time"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "complete_time",
+                "type": "NUMERIC",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "Null",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "complete_time"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "user_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.user",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.user_room",
+            "comment": "",
+            "oldName": "user_room",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "user_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "user_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "room_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "room_id"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "user_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.user",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              },
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "room_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.room",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.room",
+            "comment": "",
+            "oldName": "room",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "num",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "num"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "unit_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "unit_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "is_del",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "is_del"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "unit_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.unit",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.unit",
+            "comment": "",
+            "oldName": "unit",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "num",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "num"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "building_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "building_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "is_del",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "is_del"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "building_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.building",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.message_board",
+            "comment": "",
+            "oldName": "message_board",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "content",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "content"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "user_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "user_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "type",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "1：建议 2：投诉 3：表扬",
+                "oldName": "type"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "user_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.user",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          },
+          {
+            "objectType": "Table_LOGICAL",
+            "name": "property-management.parking",
+            "comment": "",
+            "oldName": "parking",
+            "fields": [
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "car_number",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "Null",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "car_number"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "user_id",
+                "type": "INTEGER",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": true,
+                "defaultType": "Null",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "user_id"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "parking_code",
+                "type": "NATIONAL CHARACTER VARYING",
+                "length": 255,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "",
+                "comment": "",
+                "oldName": "parking_code"
+              },
+              {
+                "objectType": "TableField_LOGICAL",
+                "name": "is_del",
+                "type": "BIT",
+                "length": 0,
+                "decimals": 0,
+                "isNullable": false,
+                "defaultType": "Others",
+                "defaultValue": "0",
+                "comment": "",
+                "oldName": "is_del"
+              }
+            ],
+            "foreignKeys": [
+              {
+                "objectType": "ForeignKey_LOGICAL",
+                "name": "",
+                "fields": [
+                  "user_id",
+                  "_id"
+                ],
+                "referencedSchema": "Default",
+                "referencedTable": "property-management.user",
+                "referencedFields": [],
+                "sourceCardinality": "ManyRelationship",
+                "targetCardinality": "OneAndOnlyOneRelationship",
+                "comment": "",
+                "oldName": ""
+              }
+            ],
+            "indexes": [],
+            "uniques": [],
+            "primaryKey": {
+              "objectType": "PrimaryKey_LOGICAL",
+              "name": "",
+              "fields": [
+                "_id"
+              ],
+              "oldName": ""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "diagrams": [
+    {
+      "name": "Diagram 1",
+      "paperWidth": 10,
+      "paperHeight": 10,
+      "tableFont": "Arial Unicode MS",
+      "tableFontSize": 14,
+      "isBalckWhite": false,
+      "showDBSchemaName": false,
+      "showViewRelations": true,
+      "notation": "crowsfoot",
+      "showFieldComment": false,
+      "showTableComment": false,
+      "shapes": [
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.admin",
+          "x": 170,
+          "y": 530,
+          "width": 296,
+          "height": 170,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.building",
+          "x": 490,
+          "y": 170,
+          "width": 267,
+          "height": 110,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.message_board",
+          "x": 540,
+          "y": 550,
+          "width": 293,
+          "height": 130,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.notice",
+          "x": 180,
+          "y": 740,
+          "width": 285,
+          "height": 110,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.order",
+          "x": 1160,
+          "y": 360,
+          "width": 268,
+          "height": 210,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.parking",
+          "x": 790,
+          "y": 160,
+          "width": 319,
+          "height": 150,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.room",
+          "x": 150,
+          "y": 350,
+          "width": 267,
+          "height": 130,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.unit",
+          "x": 180,
+          "y": 160,
+          "width": 267,
+          "height": 130,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.user",
+          "x": 780,
+          "y": 380,
+          "width": 326,
+          "height": 130,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        },
+        {
+          "type": "table",
+          "schemaName": "Default",
+          "tableName": "property-management.user_room",
+          "x": 480,
+          "y": 360,
+          "width": 259,
+          "height": 110,
+          "isBold": false,
+          "titleColor": {
+            "r": 55,
+            "g": 131,
+            "b": 192,
+            "a": 1
+          }
+        }
+      ],
+      "layers": [],
+      "relations": [
+        {
+          "name": "",
+          "sourceTableName": "property-management.order",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 1145,
+              "y": 470
+            },
+            {
+              "x": 1130,
+              "y": 470
+            },
+            {
+              "x": 1130,
+              "y": 400
+            },
+            {
+              "x": 1121,
+              "y": 400
+            }
+          ],
+          "label": {
+            "x": 1161,
+            "y": 472,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.user_room",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 754,
+              "y": 380
+            },
+            {
+              "x": 760,
+              "y": 380
+            },
+            {
+              "x": 760,
+              "y": 450
+            },
+            {
+              "x": 765,
+              "y": 450
+            }
+          ],
+          "label": {
+            "x": 744,
+            "y": 342,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.user_room",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 465,
+              "y": 430
+            },
+            {
+              "x": 450,
+              "y": 430
+            },
+            {
+              "x": 450,
+              "y": 400
+            },
+            {
+              "x": 432,
+              "y": 400
+            }
+          ],
+          "label": {
+            "x": 425,
+            "y": 392,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.room",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 280,
+              "y": 335
+            },
+            {
+              "x": 280,
+              "y": 320
+            },
+            {
+              "x": 310,
+              "y": 320
+            },
+            {
+              "x": 310,
+              "y": 305
+            }
+          ],
+          "label": {
+            "x": 288,
+            "y": 315,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.unit",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 462,
+              "y": 240
+            },
+            {
+              "x": 460,
+              "y": 240
+            },
+            {
+              "x": 475,
+              "y": 240
+            }
+          ],
+          "label": {
+            "x": 452,
+            "y": 202,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.message_board",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 848,
+              "y": 620
+            },
+            {
+              "x": 940,
+              "y": 620
+            },
+            {
+              "x": 940,
+              "y": 525
+            }
+          ],
+          "label": {
+            "x": 838,
+            "y": 582,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        },
+        {
+          "name": "",
+          "sourceTableName": "property-management.parking",
+          "sourceSchemaName": "Default",
+          "lineWidth": 1,
+          "visible": true,
+          "vertices": [
+            {
+              "x": 950,
+              "y": 325
+            },
+            {
+              "x": 950,
+              "y": 345
+            },
+            {
+              "x": 940,
+              "y": 345
+            },
+            {
+              "x": 940,
+              "y": 365
+            }
+          ],
+          "label": {
+            "x": 958,
+            "y": 315,
+            "width": 50,
+            "height": 30,
+            "fontName": "Arial Unicode MS",
+            "fontSize": 14,
+            "fontColor": {
+              "r": 51,
+              "g": 51,
+              "b": 51,
+              "a": 1
+            },
+            "isFontBold": false,
+            "isFontItalic": false,
+            "isVisible": false
+          }
+        }
+      ],
+      "viewRelations": []
+    }
+  ]
+}

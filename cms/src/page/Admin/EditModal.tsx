@@ -42,7 +42,7 @@ export const EditModal: React.FC<Props> = ({ adminInfo, show, onClose }) => {
           if (res.code === 0) {
             message.success('创建成功')
           } else {
-            message.error(`创建失败`)
+            message.error(`创建失败 ${res.code === 2 ? '当前邮箱已存在' : ''}`)
           }
         })
         .finally(() => {

@@ -19,12 +19,14 @@ export type AuthResponse = {
 export const Login: React.FC = () => {
   const navigate = useNavigate()
   const onFinish = async (value: LoginForm) => {
+    // 点击登录后
     const authResult = await loginApi({
+      // 调用登录接口
       email: value.email,
-      password: md5(value.password),
+      password: md5(value.password), // 对密码进行md5加密
     })
     if (authResult.code === 0) {
-      navigate('/dashboard')
+      navigate('/dashboard') // 登录成功后跳转到首页
     } else {
       message.error('邮箱或密码错误，请重试')
     }

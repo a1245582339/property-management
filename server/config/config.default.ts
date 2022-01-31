@@ -1,5 +1,6 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
-
+import { tmpdir } from 'os';
+import * as path from 'path';
 export default (appInfo: EggAppInfo) => {
   const config = {
     mysql: {
@@ -62,6 +63,10 @@ export default (appInfo: EggAppInfo) => {
     },
     multipart: {
       mode: 'file',
+      tmpdir: path.join(tmpdir(), 'egg-multipart-tmp', appInfo.name),
+      cleanSchedule: {
+        cron: '0 30 4 * * *',
+      },
     },
   } as PowerPartial<EggAppConfig>;
 

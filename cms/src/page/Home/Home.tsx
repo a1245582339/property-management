@@ -32,6 +32,7 @@ const Home: React.FC = () => {
     { type: '已完成', value: 0 },
   ])
   useEffect(() => {
+    // 获取入住率
     fetchOccupancyApi().then((res) => {
       let isIn = 0,
         isNotIn = 0
@@ -47,6 +48,7 @@ const Home: React.FC = () => {
         { type: '已入住', value: isIn / res.data.length },
       ])
     })
+    // 获取车位统计数据
     fetchParkingStatisticsApi().then((res) => {
       let sold = 0,
         unsold = 0
@@ -62,6 +64,7 @@ const Home: React.FC = () => {
         { type: '未售', value: unsold / res.data.length },
       ])
     })
+    // 获取订单统计数据
     fetchOrderStatisticsApi().then((res) => {
       let created = 0,
         dealed = 0,
@@ -83,6 +86,7 @@ const Home: React.FC = () => {
     })
   }, [])
   const config = {
+    // 图表的配置信息
     appendPadding: 10,
     angleField: 'value',
     colorField: 'type',

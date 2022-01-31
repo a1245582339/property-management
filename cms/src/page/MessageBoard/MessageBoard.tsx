@@ -23,7 +23,7 @@ const MessageBoard: React.FC = () => {
 
   const getMessage = useCallback(async () => {
     setLoading(true)
-    const res = await fetchMessageBoardApi({ page })
+    const res = await fetchMessageBoardApi({ page }) // 获取留言板信息
     if (res.code === 0) {
       setTableData(res.data.list)
       setTotal(res.data.total)
