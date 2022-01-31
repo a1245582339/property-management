@@ -14,6 +14,7 @@ import ExportNotice from '../../../app/service/notice';
 import ExportOrder from '../../../app/service/order';
 import ExportParking from '../../../app/service/parking';
 import ExportRoom from '../../../app/service/room';
+import ExportStatistics from '../../../app/service/statistics';
 import ExportUnit from '../../../app/service/unit';
 import ExportUserRoom from '../../../app/service/userRoom';
 
@@ -27,6 +28,7 @@ declare module 'egg' {
     order: AutoInstanceType<typeof ExportOrder>;
     parking: AutoInstanceType<typeof ExportParking>;
     room: AutoInstanceType<typeof ExportRoom>;
+    statistics: AutoInstanceType<typeof ExportStatistics>;
     unit: AutoInstanceType<typeof ExportUnit>;
     userRoom: AutoInstanceType<typeof ExportUserRoom>;
   }

@@ -11,6 +11,7 @@ import ExportNotice from '../../../app/controller/notice';
 import ExportOrder from '../../../app/controller/order';
 import ExportParking from '../../../app/controller/parking';
 import ExportRoom from '../../../app/controller/room';
+import ExportStatistics from '../../../app/controller/statistics';
 import ExportUnit from '../../../app/controller/unit';
 import ExportUserRoom from '../../../app/controller/userRoom';
 
@@ -25,6 +26,7 @@ declare module 'egg' {
     order: ExportOrder;
     parking: ExportParking;
     room: ExportRoom;
+    statistics: ExportStatistics;
     unit: ExportUnit;
     userRoom: ExportUserRoom;
   }

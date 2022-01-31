@@ -9,6 +9,7 @@ import { OrderDetail } from './page/Order/OrderDetail'
 import { CreateOrder } from './page/Order/CreateOrder'
 import { Parking } from './page/Parking/Parking'
 import { EditName } from './page/Me/EditName'
+import { MessageBoard } from './page/Me/MessageBoard'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="orderDetail/:orderId" element={<OrderDetail />} />
         <Route path="createOrder" element={<CreateOrder />} />
         <Route path="editName/:name" element={<EditName />} />
+        <Route path="messageBoard" element={<MessageBoard />} />
       </Routes>
     </div>
   )

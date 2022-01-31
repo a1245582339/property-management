@@ -1,8 +1,7 @@
-import { Button, Form, Input, message, Modal, Select } from 'antd'
+import { Form, Input, message, Modal, Select } from 'antd'
 import md5 from 'md5'
 import { useEffect, useState } from 'react'
 import { createAdminUserApi, editAdminUserApi } from '../../api/admin'
-import { useSelector } from '../../store'
 import { AdminUserInfo, Role } from '../Dashboard'
 
 type Props = {

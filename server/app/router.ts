@@ -114,4 +114,7 @@ export default (app: Application) => {
 
   /* File */
   router.post('/api/file', controller.file.upload);
+
+  /* Statistics */
+  router.get('/api/statistics/occupancy', controller.statistics.getOccupancy);
 };

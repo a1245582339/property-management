@@ -106,6 +106,14 @@ export const Me: React.FC = () => {
           <List.Item extra={userInfo.name} clickable onClick={onNameClick}>
             用户名
           </List.Item>
+          <List.Item
+            clickable
+            onClick={() => {
+              navigate('/messageBoard')
+            }}
+          >
+            留言板
+          </List.Item>
         </List>
       )}
       <Button
