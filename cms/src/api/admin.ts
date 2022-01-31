@@ -47,10 +47,15 @@ export const editAdminUserApi = async (
   return res.data
 }
 
-export const changePassword = async (body: {
+export const changePasswordApi = async (body: {
   newPassword: string
   oldPassword: string
 }) => {
   const res = await instance.put<BaseResponse<{}>>('/api/admin/password', body)
+  return res.data
+}
+
+export const logoutApi = async () => {
+  const res = await instance.post<BaseResponse<{}>>('/api/admin/logout')
   return res.data
 }

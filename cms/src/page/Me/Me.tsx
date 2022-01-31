@@ -1,7 +1,7 @@
 import { Button, Card, Descriptions, Form, Input, message } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import md5 from 'md5'
-import { changePassword } from '../../api/admin'
+import { changePasswordApi } from '../../api/admin'
 import { useSelector } from '../../store'
 import { Role } from '../Dashboard'
 
@@ -14,7 +14,7 @@ const Me: React.FC = () => {
   }>()
   const onFinish = () => {
     const formData = form.getFieldsValue()
-    changePassword({
+    changePasswordApi({
       oldPassword: md5(formData.oldPassword),
       newPassword: md5(formData.newPassword),
     }).then((res) => {

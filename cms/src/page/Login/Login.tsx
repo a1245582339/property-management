@@ -1,10 +1,9 @@
-import { Button, Card, Form, Input } from 'antd'
+import { Button, Card, Form, Input, message } from 'antd'
 import React from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import './Login.less'
 import { loginApi } from '../../api/admin'
 import md5 from 'md5'
-import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 
 export type LoginForm = {
@@ -26,6 +25,8 @@ export const Login: React.FC = () => {
     })
     if (authResult.code === 0) {
       navigate('/dashboard')
+    } else {
+      message.error('邮箱或密码错误，请重试')
     }
   }
   return (

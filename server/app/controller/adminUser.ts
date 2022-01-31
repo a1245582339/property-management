@@ -23,7 +23,7 @@ export default class AdminUser extends Controller {
   public async logout() {
     const cookie = parse(this.ctx.header.cookie as string);
     this.app.redis.del(`admin_user_${cookie.admin_id}_token`);
-    this.ctx.body = {};
+    this.ctx.body = { code: 0 };
   }
   public async adminUserInfo() {
     const { ctx } = this;

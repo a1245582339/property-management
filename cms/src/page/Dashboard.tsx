@@ -38,10 +38,12 @@ export const Dashboard: React.FC<Props> = ({ router }) => {
     <Layout style={{ minHeight: '100vh' }}>
       <Layout className="site-layout">
         <Sider router={router} />
-        <Header />
-        <Content style={{ margin: '0 16px' }}>
-          <Outlet />
-        </Content>
+        <Layout>
+          <Header />
+          <Content style={{ margin: '0 16px' }}>
+            <Outlet />
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
   )

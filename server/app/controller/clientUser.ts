@@ -7,12 +7,12 @@ export default class ClientUser extends Controller {
     this.app.redis.set(`client_user_${res._id}_token`, res.token);
     this.ctx.cookies.set(`client_id=${res._id};path=/;max-age=604800;HTTPOnly;`);
     this.ctx.cookies.set(`client_authorization_token=${res.token};path=/;max-age=604800;HTTPOnly;`);
-    this.ctx.body = {};
+    this.ctx.body = { code: 0 };
   }
   public async logout() {
     const cookie = parse(this.ctx.header.cookie as string);
     this.app.redis.del(`client_user_${cookie.client_id}_token`);
-    this.ctx.body = {};
+    this.ctx.body = { code: 0 };
   }
   public async userList() {
     const { phoneNumber = '', getList, page } = this.ctx.query;
