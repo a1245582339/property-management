@@ -24,3 +24,7 @@ https://nodejs.org/dist/v16.13.2/node-v16.13.2-x64.msi
 ## 飞书
 
 https://sf3-cn.feishucdn.com/obj/ee-appcenter/e308b5/Feishu-win32_ia32-5.5.10-signed.exe
+
+## redis
+
+https://github.com/tporadowski/redis/releases/download/v5.0.14/Redis-x64-5.0.14.msi
