@@ -11,13 +11,13 @@ export default class MessageBoard extends Service {
       .limit(20)
       .offset(page * 20);
     const total = (await this.app.knex('message_board')).length;
-    this.ctx.body = {
+    return {
       list, total,
     };
   }
 
   public async createMessageBoard(body: { user_id: number, type: MessageType, content: string }) {
     await this.app.knex('message_board').insert(body);
-    this.ctx.body = { code: 0 };
+    return { code: 0 };
   }
 }
