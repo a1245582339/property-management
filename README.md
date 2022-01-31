@@ -28,3 +28,7 @@ https://sf3-cn.feishucdn.com/obj/ee-appcenter/e308b5/Feishu-win32_ia32-5.5.10-si
 ## redis
 
 https://github.com/tporadowski/redis/releases/download/v5.0.14/Redis-x64-5.0.14.msi
+
+## chrome
+
+https://www.google.cn/chrome/thank-you.html?statcb=1&installdataindex=empty&defaultbrowser=0#
