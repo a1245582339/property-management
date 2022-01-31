@@ -1,7 +1,15 @@
-import { Empty, InfiniteScroll, List, NavBar, Selector } from 'antd-mobile'
+import {
+  Empty,
+  InfiniteScroll,
+  List,
+  NavBar,
+  NoticeBar,
+  Selector,
+} from 'antd-mobile'
 import { SelectorOption } from 'antd-mobile/es/components/selector'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { fetchNoticeApi } from '../../api/notice'
 import { fetchOrderListApi } from '../../api/order'
 import { useSelector, useDispatch } from '../../store'
 import { timestampToDate } from '../../utils/time'
@@ -10,6 +18,10 @@ export enum OrderStatus {
   Created = 1,
   Dealed,
   Complete,
+}
+
+export type Notice = {
+  content: string
 }
 
 export type Order = {
@@ -44,6 +56,8 @@ export const Order: React.FC = () => {
   const [page, setPage] = useState(0)
   const [total, setTotal] = useState(0)
   const [status, setStatus] = useState<OrderStatus | 0>(0)
+  const [noticeList, setNoticeList] = useState<Notice[]>([])
+
   const orderList = useSelector((state) => state.orderList)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -58,12 +72,21 @@ export const Order: React.FC = () => {
       setTotal(res.data.total)
     }
   }, [page, status])
+  const getNotice = useCallback(async () => {
+    const res = await fetchNoticeApi()
+    if (res.code === 0) {
+      setNoticeList(res.data)
+    }
+  }, [])
   useEffect(() => {
     setPage(0)
   }, [status])
   useEffect(() => {
     getOrderList()
   }, [getOrderList])
+  useEffect(() => {
+    getNotice()
+  }, [getNotice])
   const onItemClick = (_id: number) => {
     navigate(`/orderDetail/${_id}`)
   }
@@ -90,6 +113,9 @@ export const Order: React.FC = () => {
       >
         我的工单
       </NavBar>
+      {noticeList.map((notice) => (
+        <NoticeBar content={notice.content} color="alert" />
+      ))}
       <Selector
         options={options}
         style={{ marginTop: 20, marginLeft: 10 }}

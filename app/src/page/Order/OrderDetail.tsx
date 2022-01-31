@@ -1,13 +1,15 @@
-import { NavBar, Slider } from 'antd-mobile'
+import { NavBar, Slider, Steps } from 'antd-mobile'
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from '../../store'
 import { timestampToDate } from '../../utils/time'
+import { OrderStatus } from './Order'
 const marks = {
   10: '已创建',
   50: '已处理',
   90: '已结单',
 }
+const { Step } = Steps
 export const OrderDetail = () => {
   const orderList = useSelector((state) => state.orderList)
   const { orderId } = useParams()
@@ -33,14 +35,34 @@ export const OrderDetail = () => {
             order!.complete_time || order!.deal_time || order!.create_time
           )}
         </div>
-        <Slider
-          style={{ opacity: 1, marginTop: 20 }}
-          marks={marks}
-          ticks
-          disabled
-          value={10}
-        />
         <div style={{ fontSize: 16, marginTop: 20 }}> {order?.desc}</div>
+        {order && (
+          <Steps direction="vertical" style={{ marginTop: 20 }}>
+            <Step
+              title="已创建"
+              status={order.status >= OrderStatus.Created ? 'finish' : 'wait'}
+              description={
+                order.create_time ? timestampToDate(order.create_time) : '--'
+              }
+            />
+            <Step
+              title="已处理"
+              status={order.status >= OrderStatus.Dealed ? 'finish' : 'wait'}
+              description={
+                order.deal_time ? timestampToDate(order.deal_time) : '--'
+              }
+            />
+            <Step
+              title="已结单"
+              status={order.status >= OrderStatus.Complete ? 'finish' : 'wait'}
+              description={
+                order.complete_time
+                  ? timestampToDate(order.complete_time)
+                  : '--'
+              }
+            />
+          </Steps>
+        )}
       </div>
     </>
   )
