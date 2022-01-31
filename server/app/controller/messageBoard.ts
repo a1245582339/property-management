@@ -3,7 +3,7 @@ import { Controller } from 'egg';
 export default class Order extends Controller {
   public async getMessageBoardList() {
     const { page } = this.ctx.query;
-    const data = this.ctx.service.messageBoard.getMessageBoard({ page: Number(page) });
+    const data = await this.ctx.service.messageBoard.getMessageBoard({ page: Number(page) });
     this.ctx.body = {
       data, code: 0,
     };

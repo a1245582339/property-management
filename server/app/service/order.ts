@@ -8,19 +8,20 @@ export default class Order extends Service {
   public async getOrder({ status, page, phoneNumber, user_id }: { status?: OrderStatus, page: number, phoneNumber?: string, user_id?: number }) {
     const query = status ? { status } : {};
     if (phoneNumber !== undefined) {
-      const list = await this.app.knex.select('user.*', 'user.id as user_id', 'order.*')
-        .leftJoin('order', 'order.user_id', 'user._id')
+      const list = await this.app.knex('user')
         .where(query)
         .andWhere('user.phoneNumber', 'like', `%${phoneNumber}%`)
+        .rightJoin('order', 'order.user_id', 'user._id')
         .limit(20)
         .offset(20 * page)
         .orderBy('create_time', 'desc');
-      const total = (await this.app.knex.select('user.*', 'user.id as user_id', 'order.*')
-        .leftJoin('order', 'order.user_id', 'user._id')
+      const total = (await this.app.knex('user')
+        .rightJoin('order', 'order.user_id', 'user._id')
         .where(query)
         .andWhere('user.phoneNumber', 'like', `%${phoneNumber}%`)).length;
       return {
-        list, total,
+        list,
+        total,
       };
     } else if (user_id) {
       const list = await this.app.knex('order')

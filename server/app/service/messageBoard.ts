@@ -6,8 +6,10 @@ export enum MessageType {
 }
 export default class MessageBoard extends Service {
   public async getMessageBoard({ page }: { page: number }) {
-    const list = await this.app.knex('message_board').limit(20).offset(page * 20)
-      .orderBy('_id', 'desc');
+    const list = await this.app.knex('user')
+      .rightJoin('message_board', 'message_board.user_id', 'user._id')
+      .limit(20)
+      .offset(page * 20);
     const total = (await this.app.knex('message_board')).length;
     return {
       list, total,

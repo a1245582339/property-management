@@ -109,5 +109,5 @@ export default (app: Application) => {
 
   /* Message */
   router.get('/api/message', adminAuthMiddleware, controller.messageBoard.getMessageBoardList);
-  router.get('/api/message', clientOrAdminAuthMiddleware, controller.messageBoard.createMessage);
+  router.post('/api/message', clientOrAdminAuthMiddleware, controller.messageBoard.createMessage);
 };

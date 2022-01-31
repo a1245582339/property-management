@@ -14,7 +14,7 @@ export default class Parking extends Service {
         .knex('user')
         .where('phoneNumber', 'like', `%${phoneNumber}%`)
         .andWhere({ is_del: 0 })
-        .leftJoin('parking', 'parking.user_id', 'user._id')
+        .rightJoin('parking', 'parking.user_id', 'user._id')
         .limit(20)
         .offset(20 * page);
       const total = (await this.app

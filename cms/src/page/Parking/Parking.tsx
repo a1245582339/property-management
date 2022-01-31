@@ -94,10 +94,7 @@ const Parking: React.FC = () => {
         key: 'username',
         render(_, record) {
           return record.user_id
-            ? `${record.name} (${record.phoneNumber
-                .split('')
-                .map((num, index) => (index > 2 && index < 7 ? '*' : num))
-                .join('')})`
+            ? `${record.name} (${record.phoneNumber})`
             : '--'
         },
       },

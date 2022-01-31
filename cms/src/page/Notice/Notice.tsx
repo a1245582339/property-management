@@ -47,7 +47,7 @@ const Notice: React.FC = () => {
     message.success('更新成功')
     getNoticeList()
   }
-  const colunms = useMemo<ColumnsType<Notice>>(
+  const columns = useMemo<ColumnsType<Notice>>(
     () => [
       {
         title: '内容',
@@ -69,7 +69,6 @@ const Notice: React.FC = () => {
         title: '操作',
         dataIndex: 'action',
         render(_, record) {
-          console.log(record)
           return record.show === ShowStatus.Show ? (
             <Button
               onClick={() => {
@@ -133,7 +132,7 @@ const Notice: React.FC = () => {
           },
         }}
         loading={loading}
-        columns={colunms}
+        columns={columns}
         dataSource={noticeData}
       />
       <Modal

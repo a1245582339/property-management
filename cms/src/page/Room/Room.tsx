@@ -86,7 +86,6 @@ const Room: React.FC = () => {
           const [_, __, buildingIndex] = currNode.pos
             .split('-')
             .map((item) => Number(item))
-          console.log(newTree[0].children, buildingIndex)
           newTree[0].children![buildingIndex].children = res.data.map(
             (unit) => {
               return {
