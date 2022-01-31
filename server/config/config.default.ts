@@ -60,6 +60,9 @@ export default (appInfo: EggAppInfo) => {
         enable: false,
       },
     },
+    multipart: {
+      mode: 'file',
+    },
   } as PowerPartial<EggAppConfig>;
 
   // override config from framework / plugin

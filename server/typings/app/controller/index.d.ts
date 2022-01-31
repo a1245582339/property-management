@@ -5,6 +5,7 @@ import 'egg';
 import ExportAdminUser from '../../../app/controller/adminUser';
 import ExportBuilding from '../../../app/controller/building';
 import ExportClientUser from '../../../app/controller/clientUser';
+import ExportFile from '../../../app/controller/file';
 import ExportMessageBoard from '../../../app/controller/messageBoard';
 import ExportNotice from '../../../app/controller/notice';
 import ExportOrder from '../../../app/controller/order';
@@ -18,6 +19,7 @@ declare module 'egg' {
     adminUser: ExportAdminUser;
     building: ExportBuilding;
     clientUser: ExportClientUser;
+    file: ExportFile;
     messageBoard: ExportMessageBoard;
     notice: ExportNotice;
     order: ExportOrder;

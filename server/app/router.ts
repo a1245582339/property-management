@@ -49,7 +49,7 @@ export default (app: Application) => {
   router.get(
     '/api/client/user',
     clientOrAdminAuthMiddleware,
-    controller.clientUser.userList,
+    controller.clientUser.getUserInfo,
   );
   router.put('/api/client/user', clientOrAdminAuthMiddleware, controller.clientUser.updateUser);
 
@@ -90,7 +90,8 @@ export default (app: Application) => {
   );
 
   /* Parking */
-  router.get('/api/parking', clientOrAdminAuthMiddleware, controller.parking.getParking);
+  router.get('/api/parking', adminAuthMiddleware, controller.parking.getParking);
+  router.get('/api/client/parking', clientOrAdminAuthMiddleware, controller.parking.getParkingByUserId);
   router.post('/api/parking', adminAuthMiddleware, controller.parking.createParking);
   router.put('/api/parking', adminAuthMiddleware, controller.parking.updateParking);
   router.del('/api/parking', adminAuthMiddleware, controller.parking.delParking);
@@ -110,4 +111,7 @@ export default (app: Application) => {
   /* Message */
   router.get('/api/message', adminAuthMiddleware, controller.messageBoard.getMessageBoardList);
   router.post('/api/message', clientOrAdminAuthMiddleware, controller.messageBoard.createMessage);
+
+  /* File */
+  router.post('/api/file', controller.file.upload);
 };

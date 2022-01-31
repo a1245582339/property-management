@@ -59,6 +59,9 @@ export const Order: React.FC = () => {
     }
   }, [page, status])
   useEffect(() => {
+    setPage(0)
+  }, [status])
+  useEffect(() => {
     getOrderList()
   }, [getOrderList])
   const onItemClick = (_id: number) => {
@@ -83,6 +86,7 @@ export const Order: React.FC = () => {
             创建
           </div>
         }
+        back={null}
       >
         我的工单
       </NavBar>

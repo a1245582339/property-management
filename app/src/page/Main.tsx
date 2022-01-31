@@ -1,5 +1,6 @@
 import { TabBar } from 'antd-mobile'
 import {
+  AntOutline,
   AppOutline,
   UnorderedListOutline,
   UserOutline,
@@ -31,6 +32,7 @@ export const Main: React.FC = () => {
         defaultActiveKey={location.pathname.replace('/main/', '')}
       >
         <TabBar.Item key="order" icon={<UnorderedListOutline />} title="工单" />
+        <TabBar.Item key="parking" icon={<AntOutline />} title="车位" />
         <TabBar.Item key="room" icon={<AppOutline />} title="住房" />
         <TabBar.Item key="me" icon={<UserOutline />} title="我的" />
       </TabBar>

@@ -1,3 +1,4 @@
+import { parse } from 'cookie';
 import { Controller } from 'egg';
 export default class Parking extends Controller {
   public async getParking() {
@@ -6,6 +7,17 @@ export default class Parking extends Controller {
       phoneNumber,
       page: Number(page),
       empty: !!empty,
+    });
+    this.ctx.body = {
+      data,
+      code: 0,
+    };
+  }
+  public async getParkingByUserId() {
+    const cookie = parse(this.ctx.header.cookie as string);
+    const user_id = cookie.client_id;
+    const data = await this.ctx.service.parking.getParkingByUserId({
+      user_id: Number(user_id),
     });
     this.ctx.body = {
       data,

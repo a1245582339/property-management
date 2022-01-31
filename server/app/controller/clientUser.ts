@@ -12,6 +12,8 @@ export default class ClientUser extends Controller {
   public async logout() {
     const cookie = parse(this.ctx.header.cookie as string);
     this.app.redis.del(`client_user_${cookie.client_id}_token`);
+    this.ctx.cookies.set('client_id=;path=/;max-age=604800;HTTPOnly;');
+    this.ctx.cookies.set('client_authorization_token=;path=/;max-age=604800;HTTPOnly;');
     this.ctx.body = { code: 0 };
   }
   public async userList() {
@@ -28,6 +30,15 @@ export default class ClientUser extends Controller {
         code: 0,
       };
     }
+  }
+  public async getUserInfo() {
+    const cookie = parse(this.ctx.header.cookie as string);
+    const _id = cookie?.client_id;
+    const data = await this.ctx.service.clientUser.userInfo({ _id: Number(_id) });
+    this.ctx.body = {
+      code: 0,
+      data,
+    };
   }
   public async updateUser() {
     const cookie = parse(this.ctx.header.cookie as string);

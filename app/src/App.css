@@ -2,3 +2,12 @@
   min-height: 100vh;
   background-color: #e7ebf0;
 }
+.adm-image-uploader-cell {
+  display: none;
+}
+.adm-space-horizontal > .adm-space-item {
+  margin-right: 0 !important;
+}
+.adm-image-img {
+  object-fit: cover !important;
+}

@@ -1,6 +1,6 @@
 import { NavBar, Slider } from 'antd-mobile'
 import { useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from '../../store'
 import { timestampToDate } from '../../utils/time'
 const marks = {

@@ -37,6 +37,11 @@ export default class ClientUser extends Service {
     };
   }
 
+  public async userInfo(query: { _id: number }) {
+    const data = await this.app.knex('user').where(query);
+    return data[0];
+  }
+
   public async updateUser({ _id, avatar, name }: { _id: string, avatar: string, name: string }) {
     const updateData = { avatar, name };
     Object.keys(updateData).forEach(key => {	// 遍历要修改的数据

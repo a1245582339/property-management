@@ -1,4 +1,4 @@
-import { Empty, List } from 'antd-mobile'
+import { Empty, List, NavBar } from 'antd-mobile'
 import { useCallback, useEffect, useState } from 'react'
 import { fetchRoomListApi } from '../../api/room'
 
@@ -24,6 +24,9 @@ export const Room: React.FC = () => {
   }, [getMyRoom])
   return (
     <>
+      <NavBar style={{ backgroundColor: '#fff' }} back={null}>
+        我的房间
+      </NavBar>
       <List header="我的房间">
         {roomList.length ? (
           roomList.map((room) => (
