@@ -15,9 +15,15 @@ export default class Room extends Service {
     return { code: 0 };
   }
   public async delRoomByUnitId({ unitId }: { unitId: number }) {
-    const roomIds: { _id: number }[] = await this.app.knex('room').where({ unit_id: unitId }).select('_id');
-    const delUserRoom = (roomId: number) => this.app.knex('user_room').where({ room_id: roomId }).del();
-    await this.app.knex('room').where({ unit_id: unitId }).update({ is_del: 1 });
+    const roomIds: { _id: number }[] = await this.app.knex('room')
+      .where({ unit_id: unitId })
+      .select('_id');
+    const delUserRoom = (roomId: number) => this.app.knex('user_room')
+      .where({ room_id: roomId })
+      .del();
+    await this.app.knex('room')
+      .where({ unit_id: unitId })
+      .update({ is_del: 1 });
     await Promise.all([roomIds.map(roomId => delUserRoom(roomId._id))]);
     return { code: 0 };
   }

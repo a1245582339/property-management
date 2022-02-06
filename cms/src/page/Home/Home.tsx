@@ -34,8 +34,8 @@ const Home: React.FC = () => {
   useEffect(() => {
     // 获取入住率
     fetchOccupancyApi().then((res) => {
-      let isIn = 0,
-        isNotIn = 0
+      let isIn = 0, //已入住
+        isNotIn = 0 // 未入住
       res.data.forEach((item) => {
         if (item.user_id) {
           isIn++

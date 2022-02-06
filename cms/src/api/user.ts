@@ -6,6 +6,10 @@ export async function fetchUserListApi(query: {
   getList: true
 }): Promise<BaseResponse<{ list: User[]; total: number }>>
 export async function fetchUserListApi(query: {
+  phoneNumber: string
+  page: number
+}): Promise<BaseResponse<User>>
+export async function fetchUserListApi(query: {
   phoneNumber: any
   getList?: any
   page: any

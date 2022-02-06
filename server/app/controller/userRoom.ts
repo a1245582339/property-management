@@ -4,20 +4,20 @@ export default class UserRoom extends Controller {
   public async getUserRoom() {
     let userId = '';
     const cookie = parse(this.ctx.header.cookie as string);
-    if (cookie.client_id) {
-      userId = cookie.client_id;
-    } else {
+    if (this.ctx.query.userId) {
       userId = this.ctx.query.userId;
+    } else {
+      userId = cookie.client_id;
     }
     const { roomId } = this.ctx.query;
-    if (userId) {
-      const res = await this.ctx.service.userRoom.getUserRoomByUserId({
-        userId: Number(userId),
-      });
-      this.ctx.body = { data: res, code: 0 };
-    } else if (roomId) {
+    if (roomId) {
       const res = await this.ctx.service.userRoom.getUserRoomByRoomId({
         roomId: Number(roomId),
+      });
+      this.ctx.body = { data: res, code: 0 };
+    } else if (userId) {
+      const res = await this.ctx.service.userRoom.getUserRoomByUserId({
+        userId: Number(userId),
       });
       this.ctx.body = { data: res, code: 0 };
     }

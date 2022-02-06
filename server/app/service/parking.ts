@@ -49,7 +49,6 @@ export default class Parking extends Service {
       .knex('parking').where({ is_del: 0 })
       .leftJoin('user', 'parking.user_id', 'user._id')).length;
     return { total, list };
-
   }
   public async getParkingByUserId({ user_id }: { user_id: number }) {
     const list = await this.app.knex('parking').where({ user_id, is_del: 0 });

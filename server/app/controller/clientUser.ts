@@ -19,7 +19,6 @@ export default class ClientUser extends Controller {
   public async userList() {
     const { phoneNumber = '', getList, page } = this.ctx.query;
     const res = await this.ctx.service.clientUser.userList({ phoneNumber, page: Number(page) });
-    console.log('>>', this.ctx.query);
     if (getList) {
       this.ctx.body = {
         data: res,

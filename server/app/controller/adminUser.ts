@@ -3,20 +3,20 @@ import { parse } from 'cookie';
 export default class AdminUser extends Controller {
   public async login() {
     const { ctx } = this;
-    const { password = '', email = '' } = ctx.request.body;
-    const res = await ctx.service.adminUser.genarateToken({ password, email });
-    if (res._id) {
-      ctx.cookies.set(`admin_id=${res._id};path=/;max-age=604800;HTTPOnly;`);
+    const { password = '', email = '' } = ctx.request.body; // 获取请求的密码与邮箱
+    const res = await ctx.service.adminUser.genarateToken({ password, email }); // 获取service中生存的token
+    if (res._id) { // 如果查询到了结果
+      ctx.cookies.set(`admin_id=${res._id};path=/;max-age=604800;HTTPOnly;`); // 将管理员id设置入cookie
       ctx.cookies.set(
         `admin_authorization_token=${res.token};path=/;max-age=604800;HTTPOnly;`,
-      );
-      this.app.redis.set(`admin_user_${res._id}_token`, res.token!);
+      ); // 将token设置入cookie
+      this.app.redis.set(`admin_user_${res._id}_token`, res.token!); // 将cookie保存入redis
       ctx.body = {
-        code: 0,
+        code: 0, // 登录成功
       };
-    } else {
+    } else { // 如果没查询到结果
       ctx.body = {
-        code: 4,
+        code: 4, // 邮箱或密码错误，通过状态码通知前端
       };
     }
   }
@@ -76,6 +76,7 @@ export default class AdminUser extends Controller {
     const res = await this.ctx.service.adminUser.deleteAdminUser({
       _id: Number(_id),
     });
+    this.app.redis.del(`admin_user_${_id}_token`);
     this.ctx.body = res;
   }
   public async updateAdminUser() {

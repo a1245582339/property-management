@@ -63,12 +63,14 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
     }
   }
   const onConfirmAddUser = async () => {
-    message.loading('添加中...')
+    const close = message.loading('添加中...')
     const res = await addRoomUserApi({
       userId: selectedUser!._id,
       roomId,
     })
     if (res.code === 0) {
+      close()
+      message.success('添加成功')
       onModalCancel()
       getUserRoomData()
     }
@@ -169,7 +171,7 @@ export const UserRoomTable: React.FC<Props> = ({ roomId }) => {
             >
               <Avatar
                 size={14}
-                src={selectedUser.avatar}
+                src={`http://localhost:7001${selectedUser.avatar}`}
                 style={{ marginRight: 4 }}
               />
               {selectedUser.name}

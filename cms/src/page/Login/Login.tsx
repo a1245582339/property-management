@@ -33,7 +33,7 @@ export const Login: React.FC = () => {
   }
   return (
     <div className="login">
-      <Card className="card" hoverable>
+      <Card className="card" hoverable title="登录">
         <Form name="normal_login" className="login-form" onFinish={onFinish}>
           <Form.Item
             name="email"

@@ -24,6 +24,7 @@ const User: React.FC = () => {
   const getUserList = useCallback(() => {
     setLoading(true)
     fetchUserListApi({ phoneNumber, getList: true, page }).then((res) => {
+      // 获取用户列表
       if (res.code === 0) {
         setTableData(res.data.list)
         setTotal(phoneNumber ? res.data.total : 1)

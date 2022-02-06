@@ -152,16 +152,14 @@ const Room: React.FC = () => {
   }) => {
     info.event.stopPropagation()
     const node = info.node as EventDataNode & DataNode
-    if (node.type !== 'root') {
-      const treeBarPosition = treeBarRef.current?.getBoundingClientRect()
-      const { pageX, pageY } = info.event
-      setRightMenuPosition([
-        pageX - treeBarPosition!.x,
-        pageY - treeBarPosition!.y,
-      ])
-      setRightMenuShow(true)
-      setCurrentRightClickNode(node)
-    }
+    const treeBarPosition = treeBarRef.current?.getBoundingClientRect()
+    const { pageX, pageY } = info.event
+    setRightMenuPosition([
+      pageX - treeBarPosition!.x,
+      pageY - treeBarPosition!.y,
+    ])
+    setRightMenuShow(true)
+    setCurrentRightClickNode(node)
   }
   const nodeToStr = useMemo(() => {
     if (!currentRightClickNode) return ''
@@ -235,7 +233,7 @@ const Room: React.FC = () => {
             <Card
               hoverable
               style={{
-                width: 300,
+                width: 110,
                 position: 'absolute',
                 left: rightMenuPosition[0],
                 top: rightMenuPosition[1],

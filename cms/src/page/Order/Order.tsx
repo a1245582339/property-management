@@ -122,7 +122,6 @@ const Order: React.FC = () => {
                     <div>
                       <Button
                         size="small"
-                        danger
                         type="primary"
                         loading={changeStatusLoading}
                         onClick={() => {
@@ -136,12 +135,7 @@ const Order: React.FC = () => {
                   title={`确定流转此工单？`}
                   trigger="click"
                 >
-                  <Button
-                    style={{ marginLeft: 4 }}
-                    size="small"
-                    danger
-                    type="primary"
-                  >
+                  <Button style={{ marginLeft: 4 }} size="small" type="primary">
                     流转
                   </Button>
                 </Popover>

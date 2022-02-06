@@ -12,10 +12,10 @@ export default class UseRoom extends Service {
     const res = await this.app
       .knex('user_room')
       .select('user_room.*', 'room.num as room_num', 'unit.num as unit_num', 'building.num as building_num')
-      .where({ user_id: userId })
-      .leftJoin('room', 'user_room.room_id', 'room._id')
-      .leftJoin('unit', 'room.unit_id', 'unit._id')
-      .leftJoin('building', 'unit.building_id', 'building._id');
+      .where({ user_id: userId }) // 根据userId查询
+      .leftJoin('room', 'user_room.room_id', 'room._id') // 关联room表
+      .leftJoin('unit', 'room.unit_id', 'unit._id') // 关联unit表
+      .leftJoin('building', 'unit.building_id', 'building._id');// 关联building表
     return res;
   }
 
@@ -26,7 +26,10 @@ export default class UseRoom extends Service {
     userId: number;
     roomId: number;
   }) {
-    await this.app
+    const exist = await this.app
+      .knex('user_room')
+      .where({ user_id: userId, room_id: roomId }); // 查询当前user_room关系是否已存在
+    !exist.length && await this.app // 如果已存在则不做操作，否则将关系加入表中
       .knex('user_room')
       .insert({ user_id: userId, room_id: roomId });
     return { code: 0 };

@@ -6,6 +6,6 @@
   "rules": {
     "array-bracket-spacing": 0,
     "indent": "off",
-    "@typescript-eslint/indent": ["error"]
+    "@typescript-eslint/indent": "off"
   }
 }

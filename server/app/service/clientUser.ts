@@ -19,7 +19,7 @@ export default class ClientUser extends Service {
   public async register(data: { phoneNumber: string }) {
     const res = await this.app.knex('user').insert({
       ...data,
-      avatar: '',
+      avatar: '/public/default-avatar.png',
       name: Math.random().toString(36).slice(-6),
     });
     const _id = res[0] as number;
@@ -28,9 +28,13 @@ export default class ClientUser extends Service {
 
 
   public async userList(query: { phoneNumber: string, page: number }) {
-    const list = await this.app.knex('user').where('phoneNumber', 'like', `%${query.phoneNumber}%`).limit(20)
+    const list = await this.app.knex('user')
+      .where('phoneNumber', 'like', `%${query.phoneNumber}%`)
+      .limit(20)
       .offset(20 * query.page);
-    const total = (await this.app.knex('user').where('phoneNumber', 'like', `%${query.phoneNumber}%`)).length;
+    const total = (await this.app.knex('user')
+      .where('phoneNumber', 'like', `%${query.phoneNumber}%`))
+      .length;
     return {
       list,
       total,

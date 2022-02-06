@@ -58,7 +58,7 @@ const MessageBoard: React.FC = () => {
         },
       },
       {
-        title: '状态',
+        title: '类型',
         dataIndex: 'type',
         key: 'type',
         render(type) {

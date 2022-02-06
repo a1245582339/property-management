@@ -60,7 +60,14 @@ export default class AdminUser extends Service {
       code: 0,
     };
   }
-  public async changePassword({ _id, oldPassword, newPassword }: { _id: number, oldPassword: string, newPassword: string }) {
+  public async changePassword({
+    _id,
+    oldPassword,
+    newPassword }: {
+      _id: number,
+      oldPassword: string,
+      newPassword: string,
+    }) {
     const user = await this.app.knex('admin').where({ _id, password: oldPassword, is_del: 0 });
     if (user && user.length) {
       const res = await this.updateAdminUser({ _id, password: newPassword });
