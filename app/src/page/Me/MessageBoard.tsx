@@ -45,7 +45,7 @@ export const MessageBoard = () => {
           navigate(-1)
         }}
       >
-        修改用户名
+        留言板
       </NavBar>
       <Form
         style={{ marginTop: 20 }}

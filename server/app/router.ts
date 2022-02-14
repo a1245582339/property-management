@@ -110,7 +110,7 @@ export default (app: Application) => {
   /* Order */
   router.get('/api/admin/order', adminAuthMiddleware, controller.order.getOrderList);
   router.get('/api/client/order', clientOrAdminAuthMiddleware, controller.order.getOrderListByClientUser);
-  router.post('/api/order', adminAuthMiddleware, controller.order.createOrder);
+  router.post('/api/order', clientOrAdminAuthMiddleware, controller.order.createOrder);
   router.put('/api/order', adminAuthMiddleware, controller.order.updateOrder);
 
   /* Message */

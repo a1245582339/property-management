@@ -4,7 +4,6 @@ import * as path from 'path';
 export default class File extends Controller {
   public async upload() {
     const file = this.ctx.request.files[0];
-    console.log(file);
     const fileName = Math.random().toString(36).slice(-6) + Date.now() + file.filename;
     const data = readFileSync(file.filepath);
     const base64str = Buffer.from(data).toString('base64');
